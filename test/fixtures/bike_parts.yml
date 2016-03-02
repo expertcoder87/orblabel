@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bike_part_type: 1
+  brand: MyString
+  model: MyString
+  building_date: 2015-03-03
+  serial_number: MyString
+
+two:
+  bike_part_type: 1
+  brand: MyString
+  model: MyString
+  building_date: 2015-03-03
+  serial_number: MyString

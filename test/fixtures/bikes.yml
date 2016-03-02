@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  brand: MyString
+  model: MyString
+  size: 1
+  building_date: 2015-03-03
+  serial_number: MyString
+  certification: MyString
+
+two:
+  brand: MyString
+  model: MyString
+  size: 1
+  building_date: 2015-03-03
+  serial_number: MyString
+  certification: MyString

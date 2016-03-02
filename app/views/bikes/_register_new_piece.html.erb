@@ -1,0 +1,21 @@
+<% if params[:bike_id].present? %>
+    <%= form_for(BikePart.new,:url => register_new_bike_piece_path) do |bike_part| %>
+    	<div class="top-margin">  
+    	   <%= bike_part.label :bike_part_type, 'Tipo da Peça<span class="text-danger"></span>'.html_safe %>
+    	   <%= bike_part.select(:bike_part_type,BikePart.part_types.to_a,{:prompt => 'Select'},{:class=> 'form-control m-b select_bike_type_part'}) %>
+    	</div>
+	<%end%>
+<%end%>
+
+
+<script type="text/javascript">
+    $(".select_bike_type_part").change(function(){
+        var part_type = this.value
+        var bike = "<%=params[:bike_id]%>" 
+         $.ajax({
+            url: '/peca_antiga_details',
+            type: 'GET',
+            data: {bike_part_type: part_type,bike_id: bike}
+         });  
+      });
+</script>

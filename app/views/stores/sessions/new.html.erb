@@ -1,0 +1,54 @@
+<%= render "shared/header" %>
+
+<!-- container -->
+<div class="container">
+
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">Acesso da Loja</li>
+  </ol>
+
+
+  <div class="row">
+
+    <!-- Article main content -->
+    <article class="col-xs-12 maincontent">
+      <header class="page-header">
+        <h1 class="page-title">Acesso da Loja</h1>
+      </header>
+
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h3 class="thin text-center">Acesse sua conta</h3>
+            <p class="text-center text-muted">Ainda não é uma loja autorizada? <b><a href="/solicitar-conta">Solicite uma conta</a></b></p>
+            <hr>
+            <p class="notice"><%= notice %></p>
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>             
+              <div class="top-margin">
+                <%= f.label :email, 'E-mail <span class="text-danger">*</span>'.html_safe %>
+                <%= f.email_field :email, autofocus: true, :class => 'form-control' %>
+              </div>
+              <div class="top-margin">
+                <%= f.label :password,  'Senha <span class="text-danger">*</span>'.html_safe %>
+                <%= f.password_field :password, autocomplete: "off", :class => 'form-control' %>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-lg-8">
+                  <b><%= link_to "Esqueceu a senha?", new_password_path(resource_name) %></b>
+                </div>
+                <div class="col-lg-4 text-right">
+                  <%= f.submit "ENTRAR", :class => 'btn btn-success'%>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </article>
+    <!-- /Article -->
+
+  </div>
+</div>  <!-- /container -->
+

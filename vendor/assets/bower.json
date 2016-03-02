@@ -1,0 +1,8 @@
+{
+  "name": "dsl-generated dependencies",
+  "dependencies": {
+    "bootstrap-sass": "latest",
+    "fontawesome": "latest",
+    "startbootstrap-sb-admin-2": "latest"
+  }
+}

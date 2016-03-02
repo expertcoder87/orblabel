@@ -1,0 +1,18 @@
+<% if @bike_part_types.present?%>
+	<h4>Peça antiga:</h4>
+	  <% if @bike_part_types.first.bike_part_type == 0 %>
+	  	<h5>Tipo da Peça: Garfo </h5>
+	  <% elsif @bike_part_types.first.bike_part_type == 1 %>
+	  	<h5>Tipo da Peça: Rodas </h5>
+	  <% elsif @bike_part_types.first.bike_part_type == 2 %> 
+	  	<h5>Tipo da Peça: Quadro </h5>
+	  <% else %>
+	  	<h5>Tipo da Peça: Não selecionado </h5>
+	  <%end%>
+	  <h5>Marca: <%= @bike_part_types.first.brand %></h5>
+	  <h5>Modelo: <%= @bike_part_types.first.model %></h5>
+	  <h5>Fabricação: <%= @bike_part_types.first.building_date %></h5>
+	  <h5>Número de Série: <%= @bike_part_types.first.serial_number %></h5>
+<%else%>
+	<h4>New piece:</h4>
+<% end %>

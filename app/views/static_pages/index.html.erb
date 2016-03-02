@@ -1,0 +1,135 @@
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<!-- Header -->
+<header id="head">
+    <div class="container">
+        <div class="row">
+            <h1 class="lead">GARANTIA E SEGURANÇA PARA QUEM COMPRA</h1>
+            <br/>
+            <p class="tagline">Quer consultar uma bicicleta certificada? Digite o Número do Certificado no campo abaixo:</p>
+
+            <div class="ui-widget">
+                    <%= form_tag certified_number_path, :method => 'get' do %>
+                        <div class="form-group">
+                         <%= text_field_tag :certification,nil,:id=>"tags",:class=>"input-lg input-home form-control",:placeholder=>"Núm. Certificado" %></div>
+                            <button type="submit" class="btn btn-success btn-lg">CONSULTAR BICICLETA</button>
+                    <%end%>
+                    <p class="help"><a href="">Onde encontro esse número?</a></p>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- /Header -->
+
+
+
+<!-- Intro -->
+<div class="container text-center">
+    <br> <br>
+    <h2 class="thin">ONLINE BIKE RECORD (OBR)</h2>
+    <p class="text-muted">
+        The difference between involvement and commitment is like an eggs-and-ham breakfast:<br>
+        the chicken was involved; the pig was committed.
+    </p>
+</div>
+<!-- /Intro-->
+
+<!-- Highlights - jumbotron -->
+<div class="jumbotron top-space">
+    <div class="container">
+
+        <h3 class="text-center thin">CONHEÇA AS VANTAGENS</h3>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-6 highlight">
+                <div class="h-caption"><h4><i class="fa fa-cogs fa-5"></i>Registro de Partes e Peças</h4></div>
+                <div class="h-body text-center icons-para">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque aliquid adipisci aspernatur. Soluta quisquam dignissimos.</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 highlight">
+                <div class="h-caption"><h4><i class="fa fa-wrench fa-5"></i>Histórico de Manutenções</h4></div>
+                <div class="h-body text-center icons-para">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, commodi, sequi quis ad fugit omnis cumque a libero error.</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 highlight">
+                <div class="h-caption"><h4><i class="fa fa-unlock-alt fa-5"></i>Avisos de Roubos</h4></div>
+                <div class="h-body text-center icons-para">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, excepturi, maiores, dolorem quasi reprehenderit illo.</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 highlight">
+                <div class="h-caption"><h4><i class="fa fa-money fa-5"></i>Garantia para Vender</h4></div>
+                <div class="h-body text-center icons-para">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, vitae, perferendis, perspiciatis nobis voluptate.</p>
+                </div>
+            </div>
+        </div> <!-- /row  -->
+
+    </div>
+</div>
+<!-- /Highlights -->
+
+<!-- container -->
+<div class="container">
+
+    <h2 class="text-center top-space">PERGUNTAS FREQUENTES</h2>
+    <br>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Which code editor would you recommend?</h3>
+            <p>I'd highly recommend you <a href="http://www.sublimetext.com/">Sublime Text</a> - a free to try text editor which I'm using daily. Awesome tool!</p>
+        </div>
+        <div class="col-sm-6">
+            <h3>Nice header. Where do I find more images like that one?</h3>
+            <p>
+                Well, there are thousands of stock art galleries, but personally, I prefer to use photos from these sites: Unsplash.com and Flickr - Creative Commons</p>
+        </div>
+    </div> <!-- /row -->
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Can I use it to build a site for my client?</h3>
+            <p>
+                Yes, you can. You may use this template for any purpose, just don't forget about the <a href="http://creativecommons.org/licenses/by/3.0/">license</a>,
+                which says: "You must give appropriate credit", i.e. you must provide the name of the creator and a link to the original template in your work.
+            </p>
+        </div>
+        <div class="col-sm-6">
+            <h3>Can you customize this template for me?</h3>
+            <p>Yes, I can. Please drop me a line to sergey-at-pozhilov.com and describe your needs in details. Please note, my services are not cheap.</p>
+        </div>
+    </div> <!-- /row -->
+
+    <div class="jumbotron top-space">
+        <h3>Seja uma loja autorizada para revenda de nossos certificados e uso do Online Bike Record (OBR).</h3>
+        <br>
+        <p class="text-right"><a href="/solicitar-conta" class="btn btn-success btn-large">SOLICITAR CONTA</a></p>
+    </div>
+
+</div>  <!-- /container -->
+
+
+
+
+<script type="text/javascript">
+$(function() {
+
+    var availableTags = <%=raw @bikes%>
+
+    $( "#tags" ).autocomplete({
+            source: availableTags
+        });
+    })
+</script>
+<style type="text/css">
+    #head .btn {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding: 14px 52px !important;
+    width: 330px !important;
+}
+</style>

@@ -1,0 +1,165 @@
+
+
+<div id="page-wrapper">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <h3 class="page-header">Cadastrar Bicicleta</h3>
+      <div class="col-lg-9">
+        <% if @store.roles.first.name == "Store_Admin" %>
+        <% if @bike_owner.present? %>
+        <%= link_to 'Acesso do proprietário',acesso_do_proprietario_path(@bike_owner.id),:class=>"btn btn-info"%></a> &nbsp;&nbsp;&nbsp;&nbsp;
+        <%= link_to 'Back',admin_bike_path,:class=>"btn btn-info" %>
+        <hr/>
+        <%end%>
+        <%end%>
+        <p class="notice" style="color:red"><%= notice %></p>
+        <div class="panel panel-default">
+          <%if params[:action] == "new" %>
+          <div class="panel-heading">&nbsp;</div>
+          <%else%>
+          <div class="panel-heading">&nbsp;</div>
+          <%end%>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <%= form_for(@bike) do |f| %>
+                <div class="form-group">
+                  <%= f.label(:brand, 'Marca') %><br>
+                  <%= f.text_field :brand, :class => "form-control",:id=>"bike-brand" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label(:model, 'Modelo') %><br>
+                  <%= f.text_field :model, :class => "form-control",:id=>"bike-model" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label(:size, 'Tamanho') %><br>
+                  <%= f.select(:size,Bike.size_types.to_a,{:prompt => 'Escolha uma opção'},{:class=> 'form-control m-b',:id=>"bike-size"}) %>
+                </div>
+                <div class="form-group">
+                  <%= f.label(:building_date, 'Fabricação')%><br>
+                  <%= f.text_field :building_date, :class => "datepicker form-control",:required=>true %>
+                </div>
+                <div class="form-group">
+                  <%= f.label(:serial_number, 'Número de Série')%><br>
+                  <%= f.text_field :serial_number, :class => "form-control",:id=>"bike-serial" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label(:bike_image, 'Enviar Foto')%><br>
+                  <%= f.file_field :bike_image %>
+                </div>
+                <hr>
+                <div class="form-group">
+                  <%= f.submit "PROSSEGUIR",:class=>"btn btn-success create_btn butns-stle1" %>
+                </div>
+                <%end%>
+              </div>
+            </div>
+            <div id="part-show-model" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Bicicleta Peças</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="bike_part_show">
+                      <%= form_for(BikePart.new,url: bike_part_create_path, html: { method: :post }) do |bike_part| %>
+                      <%= hidden_field_tag :bike_id,params[:id] %>
+                      <div class="form-group">
+                        <%= bike_part.label(:bike_part_type, 'Tipo da Peça')%><br>
+                        <%= bike_part.select(:bike_part_type,BikePart.part_types.to_a,{:prompt => 'Escolha uma opção'},{:class=> 'form-control m-b',:id=>"bike-part-type" })%>
+                      </div>
+                      <div class="form-group">
+                        <%= bike_part.label(:brand, 'Marca')%><br>
+                        <%= bike_part.text_field :brand,:class=>"form-control",:id=>"bike-part-brand" %>
+                      </div>
+                      <div class="form-group">
+                        <%= bike_part.label(:model, 'Modelo')%><br>
+                        <%= bike_part.text_field :model,:class=>"form-control",:id=>"bike-part-model"%>
+                      </div>
+                      <div class="form-group">
+                        <%= bike_part.label(:building_date, 'Fabricação')%><br>
+                        <%= bike_part.text_field :building_date,:class=>"datepicker form-control",:required=>true %>
+                      </div>
+                      <div class="form-group">
+                        <%= bike_part.label(:serial_number, 'Número de Sérieção')%><br>
+                        <%= bike_part.text_field :serial_number,:class=>"form-control",:id=>"bike-part-"%>
+                      </div>
+                      <hr/>
+                      <div class="form-group">
+                        <%= bike_part.submit "CADASTRAR PECA",:class=>"btn btn-success create_btn" %>
+                      </div>
+                      <%end%>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+  .create_btn{
+  margin-left: 220px;
+  }
+  .update_btn{
+  margin-left: 275px;
+  }
+  .butns-stle1{
+  border: 1px solid #47A447;
+  border-radius: 0;
+  box-shadow: 0 2px 1px #b7b7b7;
+  color: #fff;
+  font-size: 17px;
+  text-align: center;
+  width: 25%;
+  }
+  .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+  background-color: #dddddd;}
+</style>
+<script type="text/javascript">
+  $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
+  
+  $(".show_bike_part").click(function(){
+      $("#part-show-model").modal('show')
+  });
+  
+  $(".part-expnd").each(function(){ $(this).hide(); });
+  $(".part-type").click(function(){
+    var id = this.id.split("_")[1] 
+    $("#part-expnd_"+id).toggle();
+  });
+  $(".close").click(function(){
+    location.reload(true);
+  });
+  
+   var bike_brand = new LiveValidation('bike-brand');
+   bike_brand.add( Validate.Presence );
+  
+   var bike_model = new LiveValidation('bike-model');
+   bike_model.add( Validate.Presence );
+  
+   var bike_size = new LiveValidation('bike-size');
+   bike_size.add( Validate.Presence );
+  
+   var bike_serial = new LiveValidation('bike-serial');
+   bike_serial.add( Validate.Presence );
+  
+   var bike_part_type = new LiveValidation('bike-part-type');
+   bike_part_type.add( Validate.Presence );
+  
+   var bike_part_brand = new LiveValidation('bike-part-brand');
+   bike_part_brand.add( Validate.Presence );
+  
+   var bike_part_model = new LiveValidation('bike-part-model');
+   bike_part_model.add( Validate.Presence );
+  
+   var bike_part_serial = new LiveValidation('bike-part-serial');
+   bike_part_serial.add( Validate.Presence );
+  
+</script>
+

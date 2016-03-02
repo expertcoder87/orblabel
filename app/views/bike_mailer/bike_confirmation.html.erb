@@ -1,0 +1,7 @@
+<p>Welcome <%= @store %>!</p>
+<p>Bike Number <%= @bike_serial %></p>
+<h4>Click below link to confim and generate new access code</h4>
+<%= link_to 'Accept',access_code_url(@bike_serial) %>
+
+
+

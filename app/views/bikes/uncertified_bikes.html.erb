@@ -1,0 +1,405 @@
+
+
+<div id="page-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <h3 class="">
+          <b>Online Bike Record</b><br/><br/>
+          <h4 style="margin-top: -32px;">Bicicleta sem certificado</b></h4>
+        </h3>
+        <hr>
+        <div class="col-lg-12">
+          <p class="notice" style="color: red;"><%= notice %></p>
+          <br/>
+          <div class="panel-body">
+            <table class="table table-striped" style="width:45%;margin-left:15px">
+              <% if @bike.present? %>
+              <p><b>Dados da bicicleta:</b></p>
+              <tr>
+                <th style="border-top: 2px solid #000;">Marca:</th>
+                <td style="border-top: 2px solid #000;"><%=@bike.brand %></td>
+              </tr>
+              <tr>
+                <th>Modelo</th>
+                <td><%=@bike.model %></td>
+              </tr>
+              <tr>
+                <th>Tamanho</th>
+                <td>
+                  <% if @bike.size == 0 %>
+                  Pequeno
+                  <% elsif @bike.size == 1 %>
+                  Médio
+                  <% elsif @bike.size == 2 %>
+                  Grande
+                  <% elsif @bike.size == 3 %>
+                  Extra-Grande
+                  <%else%>
+                  Não selecionado
+                  <%end%>
+                </td>
+              </tr>
+              <tr>
+                <th>Fabricação</th>
+                <td><%=@bike.building_date %></td>
+              </tr>
+              <tr>
+                <th style="border-bottom: 2px solid #000;">Número de Série</th>
+                <td style="border-bottom: 2px solid #000;"><%=@bike.serial_number %></td>
+              </tr>
+              <%end%>
+            </table>
+            <table class="table table-striped"style="width:80%;margin-left:15px;border-top: 2px solid #000;border-bottom: 2px solid #000;">
+              <p><b>Peças:</b></p>
+              <tr>
+                <th>Peça</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Fabricação</th>
+                <th>Número de Série</th>
+              </tr>
+              <% if @bike.bike_parts.present? %>
+              <% @bike.bike_parts.each do |bike_part| %>
+              <tr>
+                <td>
+                  <% if bike_part.bike_part_type == 0 %>
+                  Garfo
+                  <% elsif bike_part.bike_part_type == 1 %>
+                  Rodas
+                  <% elsif bike_part.bike_part_type == 2 %>
+                  Quadro
+                  <%else%>
+                  Não selecionado
+                  <%end%>
+                </td>
+                <td><%= bike_part.brand %></td>
+                <td><%= bike_part.model %></td>
+                <td><%= bike_part.building_date %></td>
+                <td><%= bike_part.serial_number %></td>
+                <%end%>
+              </tr>
+              <%end%>
+            </table>
+            <br/><br/>
+            <a class="unctd_bike_sel_open-model btn btn butns-stle">Vender Bicicleta</a>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Editar dados",edit_bike_path(params[:id]),:class=>"btn btn butns-stle"%>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Voltar",bikes_path,:class=>"btn btn butns-stle"%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page Wrapper -->
+<!-- Uncertified Bike Vender Bicicleta Model Open -->
+<%if @uncertified_bike.present? %>
+<div id="unct-show-model" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" onload="window.location.reload()" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Vender Bicicleta</h4>
+      </div>
+      <br>
+      <div class="uncertified-content-override">
+        <p class="txt"><b>Favor revisar as informações cadastradas. Se essas informações estiverem corretasclique em confirmar. Caso contrário clique em cancelar para continuar editando as informações</b></p>
+        <div class="modal-body">
+          <%= form_for(@uncertified_bike,url: update_uncertified_bike_path, html: { method: :put }) do |f| %>
+          <%= hidden_field_tag :uncertified_bike_id,params[:uncertified_bike_id] %>
+          <%= hidden_field_tag :bike_id,params[:id] %>
+          <p class="notice" style="color: red;"><%= notice %></p>
+          <table class="table table-striped">
+            <% if @uncertified_bike.present? %>
+            <tr>
+              <th style="border-top: 2px solid #000;">Nome</th>
+              <td style="border-top: 2px solid #000;"><%= @uncertified_bike.name%></td>
+            </tr>
+            <tr>
+              <th>CPF</th>
+              <td><%= @uncertified_bike.cpf %></td>
+            </tr>
+            <tr>
+              <th>E-Mail</th>
+              <td><%= @uncertified_bike.email %></td>
+            </tr>
+            <tr>
+              <th>Telefone</th>
+              <td>(<%= @uncertified_bike.area_code%>) <%= @uncertified_bike.cell_phone_number.insert(5, '-') %></td>
+            </tr>
+            <tr>
+              <th>Endereço</th>
+              <td><%= @uncertified_bike.street %>,<%= @uncertified_bike.number%></td>
+            </tr>
+            <tr>
+              <th>Complemento</th>
+              <td><%= @uncertified_bike.district %></td>
+            </tr>
+            <tr>
+              <th>CEP</th>
+              <td><%= @uncertified_bike.zipcode %></td>
+            </tr>
+            <tr>
+              <th>Cidade</th>
+              <td><%= @uncertified_bike.city %></td>
+            </tr>
+            <tr>
+              <th>Estado</th>
+              <td><%= @uncertified_bike.state%></td>
+            </tr>
+            <tr>
+              <th>Certificado</th>
+              <td><%= @uncertified_bike.certification %></td>
+            </tr>
+            <tr>
+              <th style="border-bottom: 2px solid #000;">Preço de venda</th>
+              <td style="border-bottom: 2px solid #000;"><%= @uncertified_bike.selling_price %></td>
+            </tr>
+            <tr>
+              <th>Nota Fiscal/<br>Recibo de venda:</th>
+              <td><%= image_tag @uncertified_bike.receipt %></td>
+            </tr>
+            <hr>
+            <%end%>
+          </table>
+          <hr>
+          <a class="volter-btn btn butns-stle con-vender-btn">Voltar</a>
+          <%= f.submit "Confirmar",:class=>"btn btn-success butns-stle1 " %>
+          <%end%>
+        </div>
+        <!-- Model Body -->
+      </div>
+    </div>
+    <!-- Model Content -->
+  </div>
+</div>
+<%end%>
+<!-- Uncertified Bike Vender Bicicleta Model Close -->
+<!-- Model For Vender bicicleta Open-->
+<div id="uncrtd_sel_add-model" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title">Vender Bicicleta</h4>
+    </div>
+    <br/>
+    <p><b style="margin-left: 19px;">Favor preencher com os dados do comprador.
+      </b>
+    </p>
+    <div class="modal-body">
+      <%= form_for(UncertifiedBike.new,url: uncertified_bikes_vender_path, html: { method: :post }) do |f| %>
+      <%= hidden_field_tag :bike_id,params[:id] %>
+      <p class="notice" style="color: red;"><%= notice %></p>
+      <div class="form-group">
+        <%= f.label(:name, 'Nome*') %><br>
+        <%= f.text_field :name, :class => "form-control",:id=>"v_name" %>
+      </div>
+      <div class="form-group">
+        <%= f.label(:cpf, 'CPF*') %><br>
+        <%= f.text_field :cpf,:maxlength=>"11",:class => "cpf_change form-control",:id=>"v_cpf" %>
+      </div>
+      <div class="cpf_check"></div>
+      <div class="form-group">
+        <%= f.label(:email, 'E-Mail*') %><br>
+        <%= f.text_field :email, :class => "form-control",:id=>"v_email" %>
+      </div>
+      <div class="form-group">
+        <%= f.label(:email_confirmation, 'E-Mail Confirmation*') %><br>
+        <%= f.text_field :email_confirmation, :class => "form-control",:id=>"v_email_confir" %>
+      </div>
+      <div class="form-group">
+        <%= f.label(:area_code, 'Código de Área*') %><br>
+        <%= f.text_field :area_code, :class => "form-control",:placeholder=>"DD",:maxlength => "2", :size => "8",:id=>"v_area" %>
+      </div>
+      <div class="form-group">
+        <%= f.label(:cell_phone_number, 'Celular*') %>
+        <%= f.text_field :cell_phone_number, :class => "form-control",:placeholder=>"Numero",:maxlength => "9",:id=>"v_phone" %>
+      </div>
+      <div class="form-group">
+        <label>Endereço*</label> <br>
+        <%= f.text_field :street, :class => "form-control", :placeholder => "Rua, Avenida...",:id=>"v_street" %><br/>
+        <div class="form-inline">
+          <%= f.text_field :number, :class => "form-control form-width", :maxlength => "4", :placeholder => "Número", :size => "8",:id=>"v_number" %>
+          &nbsp;&nbsp;
+          <%= f.text_field :district, :class => "form-control form-width", :placeholder => "Complemento", :size => "30",:id=>"v_district" %>
+          <%= f.text_field :zipcode, :class => "form-control form-width cep-form-width", :maxlength => "10", :placeholder => "CEP", :size => "15",:id=>"v_zipcode" %>
+        </div>
+        <br>
+        <div class="form-inline">
+          <%= f.text_field :city, :class => "form-control form-width", :placeholder => "Cidade", :size => "30",:id=>"v_city" %>
+          &nbsp;&nbsp;
+          <%= f.text_field :state, :class => "form-control form-width", :maxlength => "2", :placeholder => "Estado", :size => "8",:id=>"v_state" %>
+        </div>
+        <br>
+        <div class="form-field">
+          <%= f.label(:certification, 'Número do certificado*') %><br>
+          <%= f.text_field :certification, :class => "form-control",:maxlength => "11",:id=>"v_certification" %>
+        </div>
+        <br>
+        <div class="form-field">
+          <%= f.label(:certification_confirm, 'Número do certificado Confirm*') %><br>
+          <%= f.text_field :certification_confirm, :class => "form-control",:maxlength => "11",:id=>"v_certification_confir" %>
+        </div>
+        <br>
+        <div class="form-field">
+          <%= f.label(:selling_price, 'Preço de venda*') %><br>
+          <%= f.text_field :selling_price, :class => "form-control",:id=>"v_price" %>
+        </div>
+        <br>
+        <div class="form-field">
+          <%= f.label(:receipt, 'NF/Recibo de venda*') %><br>
+          <%= f.file_field :receipt, :class => "",:required=>true %>
+        </div>
+        <hr>
+        <div class="form-group">
+          <%= f.submit "Vender bicicleta",:class=>"create_btn butns-stle1 btn btn-success" %>
+        </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Model For Vender bicicleta Close-->
+<script type="text/javascript">
+  $("#v_cpf").mask("999.999.999-99");
+  $("#v_zipcode").mask("99.999-999");
+</script>
+<script type="text/javascript">  
+  var check = "<%=params[:uncertified_bike_id]%>"
+  if (check){
+    $("#unct-show-model").modal('show');
+  }
+  $(".unctd_bike_sel_open-model").click(function(){
+      $("#uncrtd_sel_add-model").modal('show')
+  });
+  $(".cpf_change").change(function(){
+    var cpf_value = document.getElementById('v_cpf').value
+     $.ajax({
+        url: '/cpf_check',
+        type: 'GET',
+        data: {cpf: cpf_value}
+     });
+  });
+  $(".volter-btn").click(function(){
+    var uncertified_bike_id = "<%=params[:uncertified_bike_id]%>"
+    $.ajax({
+        url: '/vender_bicicleta_model',
+        type: 'GET',
+        data: {uncertified_bike_id: uncertified_bike_id}
+     });
+  });
+  
+  $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
+  
+   var vender_name = new LiveValidation('v_name')
+   vender_name.add( Validate.Presence )
+  
+   var vender_cpf = new LiveValidation('v_cpf')
+   vender_cpf.add( Validate.Presence )
+   vender_cpf.add(Validate.Length, { minimum: 11 });
+  
+   var vender_email = new LiveValidation('v_email')
+   vender_email.add( Validate.Presence )
+   vender_email.add( Validate.EMail )
+  
+   var vender_email_confir = new LiveValidation('v_email_confir')
+   vender_email_confir.add( Validate.Presence )
+   vender_email_confir.add( Validate.EMail );
+   vender_email_confir.add( Validate.Confirmation, { match: 'v_email' } );
+  
+   var verder_areacode = new LiveValidation('v_area')
+   verder_areacode.add( Validate.Presence )
+   verder_areacode.add( Validate.Length, { minimum: 2} );
+  
+   var verder_phone = new LiveValidation('v_phone')
+   verder_phone.add( Validate.Presence )
+   verder_phone.add( Validate.Length, { minimum: 9} );
+  
+   var verder_street = new LiveValidation('v_street')
+   verder_street.add( Validate.Presence )
+  
+   var verder_number = new LiveValidation('v_number')
+   verder_number.add( Validate.Presence )
+   verder_number.add( Validate.Length, { minimum: 1 } );
+  
+   var ver_zipcode = new LiveValidation('v_zipcode')
+   ver_zipcode.add( Validate.Presence )
+   ver_zipcode.add( Validate.Length, { minimum: 10 } );
+  
+   var verder_city = new LiveValidation('v_city')
+   verder_city.add( Validate.Presence )
+  
+   var verder_state = new LiveValidation('v_state')
+   verder_state.add( Validate.Presence )
+  
+   var ver_certification = new LiveValidation('v_certification')
+   ver_certification.add( Validate.Presence )
+   ver_certification.add( Validate.Length, { minimum: 11 } );
+  
+   var ver_certification_confir = new LiveValidation('v_certification_confir')
+   ver_certification_confir.add( Validate.Presence )
+   ver_certification_confir.add( Validate.Length, { minimum: 11 } );
+   ver_certification_confir.add( Validate.Confirmation, { match: 'v_certification' })
+   var vender_price = new LiveValidation('v_price')
+   vender_price.add( Validate.Presence )
+  
+</script>
+<style type="text/css">
+  .field-wdt{
+  width: 480px;
+  }
+  .updte-btn{
+  margin-left: 200px;
+  }
+  .create_btn{
+  margin-left: 210px;
+  }
+  .con-vender-btn{
+  margin-left: 150px;
+  }
+  .bck-btn{
+  margin-left: 500px;
+  }
+  .form-width{
+  width: auto;
+  }
+  .cep-form-width{
+  margin-left: 400px !important;
+  margin-top: -57px !important;
+  width: 150px !important;
+  }
+  .txt{
+  margin-left: 12px;
+  }
+  .modal {
+  bottom: 0;
+  left: 0;
+  overflow-x: auto;
+  overflow-y: scroll;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1040;
+  }
+  .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+  background-color: #dddddd;}
+  .butns-stle{
+  background-color: rgb(78, 129, 189);
+  border: 1px solid #4e81bd;
+  border-radius: 0;
+  box-shadow: 0 2px 1px #b7b7b7;
+  color: #fff;
+  font-size: 17px;
+  text-align: center;
+  width: 20%;
+  }
+  .butns-stle1{
+  border: 1px solid #47A447;
+  border-radius: 0;
+  box-shadow: 0 2px 1px #b7b7b7;
+  color: #fff;
+  font-size: 17px;
+  text-align: center;
+  width: 28%;
+  }
+</style>
+

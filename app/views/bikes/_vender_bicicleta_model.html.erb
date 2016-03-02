@@ -1,0 +1,83 @@
+<p style="margin-left: 19px;"><b>Favor preencher com os dados do comprador.</b></p>
+<div class="modal-body">
+<%= form_for(@uncertified_bike,url: vender_bicicleta_model_update_path, html: { method: :put }) do |f| %>
+<%= hidden_field_tag :uncertified_bike_id,@uncertified_bike.id %>
+<div class="form-group">
+  <%= f.label(:name, 'Nome*') %><br>
+  <%= f.text_field :name, :class => "form-control",:id=>"v_name" %> 
+</div>
+<div class="form-group">
+  <%= f.label(:cpf, 'CPF*') %><br>
+  <%= f.text_field :cpf,:maxlength=>"11",:class => "form-control",:id=>"v_cpf" %>
+</div>
+<div class="form-group">
+  <%= f.label(:email, 'E-Mail*') %><br>
+  <%= f.text_field :email, :class => "form-control",:id=>"v_email" %>
+</div>
+<div class="form-group">
+  <%= f.label(:email_confirmation, 'E-Mail Confirmation*') %><br>
+  <%= f.text_field :email_confirmation, :class => "form-control",:id=>"v_email_confir" %>
+</div>
+<div class="form-group">
+  <%= f.label(:area_code, 'Código de Área*') %><br>
+  <%= f.text_field :area_code, :class => "form-control",:placeholder=>"DD",:maxlength => "2", :size => "8",:id=>"v_area" %>
+</div>
+<div class="form-group">
+  <%= f.label(:cell_phone_number, 'Celular*') %>
+  <%= f.text_field :cell_phone_number, :class => "form-control",:placeholder=>"Numero",:maxlength => "9",:id=>"v_phone" %>
+</div>
+<div class="form-group">
+<label>Endereço*</label> <br>
+<%= f.text_field :street, :class => "form-control", :placeholder => "Rua, Avenida...",:id=>"v_street" %><br/>
+<div class="form-inline">
+  <%= f.text_field :number, :class => "form-control form-width", :maxlength => "4", :placeholder => "Número", :size => "8",:id=>"v_number" %>
+  &nbsp;&nbsp;
+  <%= f.text_field :district, :class => "form-control form-width", :placeholder => "Complemento", :size => "30",:id=>"v_district" %>
+  <%= f.text_field :zipcode, :class => "form-control form-width cep-form-width", :maxlength => "10", :placeholder => "CEP", :size => "15",:id=>"v_zipcode" %>
+</div>
+<br>
+<div class="form-inline">
+  <%= f.text_field :city, :class => "form-control form-width", :placeholder => "Cidade", :size => "30",:id=>"v_city" %>
+  &nbsp;&nbsp;
+  <%= f.text_field :state, :class => "form-control form-width", :maxlength => "2", :placeholder => "Estado", :size => "8",:id=>"v_state" %>
+</div>
+<br>
+<div class="form-field">
+  <%= f.label(:certification, 'Número do certificado*') %><br>
+  <%= f.text_field :certification, :class => "form-control",:maxlength => "11",:id=>"v_certification" %>
+</div>
+<br>
+<div class="form-field">
+  <%= f.label(:certification_confirm, 'Número do certificado Confirm*') %><br>
+  <%= f.text_field :certification_confirm, :class => "form-control",:maxlength => "11",:id=>"v_certification_confir" %>
+</div>
+<br>
+<div class="form-field">
+  <%= f.label(:selling_price, 'Preço de venda*') %><br>
+  <%= f.text_field :selling_price, :class => "form-control",:id=>"v_price" %>
+</div>
+<br>
+<div class="form-field">
+  <%= f.label(:receipt, 'NF/Recibo de venda*') %><br>
+  <%= f.file_field :receipt, :class => "",:required=>true %>
+</div>
+<hr>
+<div class="form-group">
+  <%= f.submit "Vender bicicleta",:class=>"create-btn1 btn btn-success butns-stle1" %>
+</div>
+<%end%>
+<style type="text/css">
+  .create-btn1{
+  margin-left: 190px;
+  }
+  .butns-stle1{
+  border: 1px solid #47A447;
+  border-radius: 0;
+  box-shadow: 0 2px 1px #b7b7b7;
+  color: #fff;
+  font-size: 17px;
+  text-align: center;
+  width: 28%;
+  }
+</style>
+

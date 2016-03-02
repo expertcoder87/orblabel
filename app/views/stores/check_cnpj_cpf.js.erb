@@ -1,0 +1,5 @@
+<%if @cnpj_valid.present? || @cnpj_existence.present? || @cnpj_invalid.present?%>
+	$('.cnpj_cpf_valid').html("<%= escape_javascript(render 'check_cnpj_cpf') %>");
+<%elsif @email_existence.present? || @email_nonexistence.present? %>
+	$('.check_email').html("<%= escape_javascript(render 'check_cnpj_cpf') %>");
+<%end%>

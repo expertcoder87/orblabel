@@ -1,0 +1,184 @@
+
+
+<%= render "shared/header" %>
+<!-- container -->
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">
+      <% if @bike_owner.present? && @bike_details.present? %>
+      <%= @bike_details.model%>-<%= @bike_owner.certification %>
+      <%end%>
+    </li>
+  </ol>
+  <div class="row">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="">
+          <h2 class="page-header">      
+            <b>Atualizar informações do proprietário</b>
+          </h2>
+          <div class="col-lg-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">&nbsp;</div>
+              <div class="panel-body">
+                <div class="row col-lg-11">
+                  <p class="notice"><%= notice %></p>
+                  <%= form_for(@bike_owner,url: update_uncertified_bike_path, html: { method: :put }) do |f| %>
+                  <%= hidden_field_tag :owner_id,params[:id]%>
+                  <div class="form-group">
+                    <%= f.label(:name, 'Nome') %><br>
+                    <%= f.text_field :name, :class => "form-control",:id=>"t_name"%>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label(:cpf, 'CPF') %><br>
+                    <%= f.text_field :cpf, :class => "form-control",:id=>"t_cpf"%>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label(:email, 'E-Mail') %><br>
+                    <%= f.text_field :email, :class => "form-control",:id=>"t_email"%>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label(:area_code, 'Código de Área') %><br>
+                    <%= f.text_field :area_code, :class => "form-control",:id=>"t_area_code"%>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label(:cell_phone_number, 'Celular')  %>
+                    <%= f.text_field :cell_phone_number, :class => "form-control",:id=>"t_phone"%>
+                  </div>
+                  <div class="form-group">
+                    <label>Endereço</label><br>
+                    <%= f.text_field :street, :class => "form-control", :placeholder => "Rua, Avenida...",:id=>"t_street" %><br/>
+                    <div class="form-inline">
+                      <%= f.text_field :number, :class => "form-control", :maxlength => "4", :placeholder => "Número", :size => "8",:id=>"t_number" %>
+                      &nbsp;&nbsp;
+                      <%= f.text_field :district, :class => "form-control", :placeholder => "Complemento", :size => "20",:id=>"t_district" %>
+                      <%= f.text_field :zipcode, :class => "form-control frm-wdth", :maxlength => "10", :placeholder => "CEP",:id=>"t_cep"%>
+                    </div>
+                    <div class="form-inline">
+                      <%= f.text_field :city, :class => "form-control", :placeholder => "Cidade", :size => "30",:id=>"t_city" %>
+                      &nbsp;&nbsp;
+                      <%= f.text_field :state, :class => "form-control", :maxlength => "2", :placeholder => "Estado", :size => "8",:id=>"t_state" %>
+                    </div>
+                  </div>
+                  <hr/>
+                  <div class="form-group">
+                    <%= f.submit "ATUALIZAR",:class=>"btn btn-success update-btn butns-stle1"%>
+                  </div>
+                  <%end%>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Panel End -->
+        </div>
+      </div>
+    </div>
+    <!-- Row End -->
+  </div>
+  <!-- Container Fluid -->
+</div>
+<!-- First Row -->
+</div>
+</div>  <!-- /container -->
+<!-- Style and Script -->
+<style type="text/css">
+  .frm-wdth{
+  margin-left: 327px;
+  margin-top: -57px;
+  }
+  .trn-btn{
+  margin-left: 200px;
+  }
+  .trn-btn1{
+  margin-top: -1617px;
+  margin-left: 100px;
+  }
+  .update-btn{
+  margin-left: 150px;
+  }
+  .rpt-btn{
+  margin-left: 240px;
+  margin-top: -10px;
+  }
+  .modal-backdrop.in{
+  opacity: 0 !important;
+  }
+  .modal-backdrop{
+  z-index: 0 !important;
+  }
+  .butns-stle1{
+  border: 1px solid #47A447;
+  border-radius: 0;
+  box-shadow: 0 2px 1px #b7b7b7;
+  color: #fff;
+  font-size: 17px;
+  text-align: center;
+  width: 28%;
+  }
+</style>
+<script type="text/javascript">
+  $("#t_cpf").mask("999.999.999-99");
+</script>
+<script type="text/javascript">
+  var trr_emai = new LiveValidation('email_tr')
+  trr_emai.add( Validate.Presence )
+  trr_emai.add( Validate.Email )
+  
+  var trr_email = new LiveValidation('email_tr_confir')
+  trr_email.add( Validate.Presence )
+  trr_email.add( Validate.Email )
+  trr_email.add( Validate.Confirmation,  { match: 'email_tr' } )
+  
+  var trr_price = new LiveValidation('price_tr')
+  trr_price.add( Validate.Presence )
+  
+  
+  var tr_name = new LiveValidation('t_name');
+  tr_name.add( Validate.Presence );
+  
+  
+  var tr_cpf = new LiveValidation('t_cpf');
+  tr_cpf.add( Validate.Presence );
+  tr_cpf.add( Validate.Length, { minimum: 11 } );
+  
+  var tr_email = new LiveValidation('t_email');
+  tr_email.add( Validate.Presence );
+  tr_email.add( Validate.Email )
+  
+  var tr_area_code = new LiveValidation('t_area_code');
+  tr_area_code.add( Validate.Presence );
+  tr_area_code.add( Validate.Length, { minimum: 2 } );
+  
+  var tr_phone = new LiveValidation('t_phone');
+  tr_phone.add( Validate.Presence );
+  tr_phone.add( Validate.Length, { minimum: 9 } );
+  
+  var tr_street = new LiveValidation('t_street')
+  tr_street.add( Validate.Presence )
+  
+  var tr_number = new LiveValidation('t_number')
+  tr_number.add( Validate.Presence )
+  tr_number.add( Validate.Length, { minimum: 4 } );
+  
+  var tr_district = new LiveValidation('t_district')
+  tr_district.add( Validate.Presence )
+  
+  var tr_cep = new LiveValidation('t_cep')
+  tr_cep.add( Validate.Presence )
+  tr_cep.add( Validate.Length, {minimum: 10 } );
+  
+  var tr_city = new LiveValidation('t_city')
+  tr_city.add( Validate.Presence )   
+  
+  var tr_state = new LiveValidation('t_state')
+  tr_state.add( Validate.Presence )   
+  tr_state.add( Validate.Length, {minimum: 2 } );
+  
+  
+  $(".tnsfr_open-model").click(function(){
+     $("#tnsfr_add-model").modal('show')
+  });
+  
+</script>
+

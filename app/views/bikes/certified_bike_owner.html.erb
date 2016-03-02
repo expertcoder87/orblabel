@@ -1,0 +1,290 @@
+
+
+<%= render "shared/header" %>
+<!-- container -->
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+  </ol>
+  <hr/>
+  <div class="row">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <% if @bike_owner.present? %>
+          <h3 class="">
+            <b>Online Bike Record</b><br/><br/>
+            <h4 style="margin-top: -32px;">Certificado:<b><%= @bike_owner.certification%></b></h4>
+          </h3>
+          <hr>
+          <%end%>
+          <% if @robery == true %>
+          <h5 style="color: red;">Esta bicicleta tem um alerta de roubo! As funcionalidades associadas com esta bicicleta não estão disponíveis.</h5>
+          <%end%>
+          <div class="panel-body">
+            <div class="row col-lg-11">
+              <p class="notice"><%= notice %></p>
+              <table class="table table-striped" style="width:35%;margin-left:15px">
+                <% if @bike_owner.present? %>
+                <p><b>Conta do proprietário:</b></p>
+                <tr>
+                  <th style="border-top: 2px solid #000;">Nome</th>
+                  <td style="border-top: 2px solid #000;"><%= @bike_owner.name %></td>
+                </tr>
+                <tr>
+                  <th>E-mail</th>
+                  <td><%= @bike_owner.email %></td>
+                </tr>
+                <tr>
+                  <th style="border-bottom: 2px solid #000;">Telefone</th>
+                  <td style="border-bottom: 2px solid #000;">(<%= @bike_owner.area_code %>) <%= @bike_owner.cell_phone_number.insert(5, '-') %></td>
+                </tr>
+                <%end%>
+              </table>
+              <table class="table table-striped" style="width:35%;margin-left:15px">
+                <% if @bike_details.present? %>
+                <p><b>Dados da bicicleta:</b></p>
+                <tr>
+                  <th style="border-top: 2px solid #000;">Marca:</th>
+                  <td style="border-top: 2px solid #000;"><%=@bike_details.brand %></td>
+                </tr>
+                <tr>
+                  <th>Modelo</th>
+                  <td><%=@bike_details.model %></td>
+                </tr>
+                <tr>
+                  <th>Tamanho</th>
+                  <td>
+                    <% if @bike_details.size == 0 %>
+                    Pequeno
+                    <% elsif @bike_details.size == 1 %>
+                    Médio
+                    <% elsif @bike_details.size == 2 %>
+                    Grande
+                    <% elsif @bike_details.size == 3 %>
+                    Extra-Grande
+                    <%else%>
+                    Não selecionado
+                    <%end%>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Fabricação</th>
+                  <td><%=@bike_details.building_date %></td>
+                </tr>
+                <tr>
+                  <th style="border-bottom: 2px solid #000;">Número de Série</th>
+                  <td style="border-bottom: 2px solid #000;"><%=@bike_details.serial_number %></td>
+                </tr>
+                <%end%>
+              </table>
+              <table class="table table-striped"style="width:80%;margin-left:15px;border-top: 2px solid #000;border-bottom: 2px solid #000;">
+                <p><b>Peças:</b></p>
+                <tr>
+                  <th>Peça</th>
+                  <th>Marca</th>
+                  <th>Modelo</th>
+                  <th>Fabricação</th>
+                  <th>Número de Série</th>
+                </tr>
+                <% if @bike_details.bike_parts.present? %>
+                <% @bike_details.bike_parts.each do |bike_part| %>
+                <tr>
+                  <td>
+                    <% if bike_part.bike_part_type == 0 %>
+                    Garfo
+                    <% elsif bike_part.bike_part_type == 1 %>
+                    Rodas
+                    <% elsif bike_part.bike_part_type == 2 %>
+                    Quadro
+                    <%else%>
+                    Não selecionado
+                    <%end%>
+                  </td>
+                  <td><%= bike_part.brand %></td>
+                  <td><%= bike_part.model %></td>
+                  <td><%= bike_part.building_date %></td>
+                  <td><%= bike_part.serial_number %></td>
+                  <%end%>
+                </tr>
+                <%end%>
+              </table>
+              <table class="table table-striped" style="width:80%;margin-left:15px;border-top: 2px solid #000;border-bottom: 2px solid #000;">
+                <p><b>Manutenções:</b></p>
+                <tr>
+                  <th>Data</th>
+                  <th>Descrição</th>
+                  <th>Recibo / Nota</th>
+                </tr>
+                <% if @maintenance_events.present? %>
+                <% @maintenance_events.each do |bike_event| %>
+                <tr>
+                  <td><%= bike_event.updated_at.strftime("%d/%m/%Y")%></td>
+                  <td><%= bike_event.description %></td>
+                  <td><%=image_tag bike_event.maintenance_receipt_image %></td>
+                </tr>
+                <%end%>
+                <%end%>
+              </table>
+              <table class="table table-striped" style="width:80%;margin-left:15px;border-top: 2px solid #000;border-bottom: 2px solid #000;">
+                <% if @date_of_sales.present? %>
+                <p><b>Vendas:</b></p>
+                <tr>
+                  <th>Data</th>
+                  <th>Recibo / Nota</th>
+                </tr>
+                <% @date_of_sales.each do |date_of_sales|%>
+                <tr>
+                  <td><%= date_of_sales.updated_at.strftime("%d/%m/%Y") %></td>
+                  <td><%= image_tag date_of_sales.receipt%></td>
+                </tr>
+                <%end%>
+                <%end%>
+              </table>
+              <table class="table table-bordered" style="width:35%;border-top:0px;">
+                <p><b style="font-size: 20px;">Foto:</b></p>
+                <tr>
+                  <td style="border-top: 0px none;"><%= image_tag @bike_details.bike_image%></td>
+                </tr>
+              </table>
+              <br/><br/>
+              <div>
+                <%= form_tag proprietario_bicicleta_cerified_path, :method => 'get' do %>
+                <% if @robery == false %>
+                <%= submit_tag "Alertar Roubo",:class=>"btn btn butns-stle rpt-btn butns-stle",data: {confirm: 'Você tem certeza de que deseja reportar o roubo dessa bicicleta? Este certificado ficará bloqueado.'}%>
+                <%= link_to "Editar dados do proprietário",acesso_do_proprietario_path(params[:id]),:class=>"btn btn butns-stle edit-btn butns-stle"%>
+                <%elsif  @robery == true %>
+                <%= submit_tag "Cancelar Alerta de Roubo",:class=>"btn btn-danger rpt-btn butns-stle1" %>
+                <%= link_to "Editar dados do proprietário",acesso_do_proprietario_path(params[:id]),:class=>"btn btn butns-stle edit-btn1 butns-stle"%>
+                <%else%>
+                <%= submit_tag "Alertar Roubo",:class=>"btn btn butns-stle rpt-btn butns-stle",data: {confirm: 'Você tem certeza de que deseja reportar o roubo dessa bicicleta? Este certificado ficará bloqueado.'}%>
+                <% end %> 
+                <%end%>   
+              </div>
+              <a class="tnsfr_open-model btn btn butns-stle trn-btn1 butns-stle">Transferir OBR 
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="tnsfr_add-model" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+  <div class="modal-dialog" style="margin-left: -230px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">TRANSFERIR</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for(UncertifiedBike.new,url: transfer_bicicleta_path, html: { method: :post }) do |certified| %>
+        <%= hidden_field_tag :owner_id,params[:id]%>
+        <div class="form-group">
+          <%= certified.label(:email, 'E-Mail') %><br>
+          <%= certified.text_field :email, :class => "form-control",:id=>"email_tr"%>
+        </div>
+        <div class="form-group">
+          <%= certified.label(:email_confirmation, 'E-Mail-Confirmation') %><br>
+          <%= certified.text_field :email_confirmation, :class => "form-control",:id=>"email_tr_confir"%>
+        </div>
+        <div class="form-group">
+          <%= certified.label(:selling_price, 'Preço de venda') %><br>
+          <%= certified.text_field :selling_price, :class => "form-control",:id=>"price_tr"%>
+        </div>
+        <div class="form-group">
+          <%= certified.label(:receipt, 'NF/Recibo de venda*') %><br>
+          <%= certified.file_field :receipt,:required=>true%>
+        </div>
+        <hr>
+        <div class="form-group">
+          <%= certified.submit "TRANSFERIR",:class=>"btn btn-success trn-btn butns-stle2",data: {confirm: 'Clicando em Prosseguir, o certificado dessa bicicleta será transferido para o novo prorietário e ele receberá um novo código de acesso por e-mail. Você não conseguirá mais acessar essa bicicleta como seu proprietário." [button "OK"]'}%>
+        </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Transfer Bicicleta Model End -->
+<script type="text/javascript">
+  $(".tnsfr_open-model").click(function(){
+    $("#tnsfr_add-model").modal('show')
+  });
+  var trr_emai = new LiveValidation('email_tr')
+  trr_emai.add( Validate.Presence )
+  trr_emai.add( Validate.Email )
+  
+  var trr_email = new LiveValidation('email_tr_confir')
+  trr_email.add( Validate.Presence )
+  trr_email.add( Validate.Email )
+  trr_email.add( Validate.Confirmation,  { match: 'email_tr' } )
+  
+  var trr_price = new LiveValidation('price_tr')
+  trr_price.add( Validate.Presence )
+</script>
+<style type="text/css">
+  .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+  background-color: #dddddd;
+  }
+  .butns-stle{
+  background-color: rgb(78, 129, 189);
+  color: #fff;
+  }
+  .rpt-btn{
+  margin-bottom: -4px;
+  margin-left: 222px;
+  }
+  .trn-btn1{
+  margin-top: -60px;
+  }
+  .modal-backdrop.in{
+  opacity: 0 !important;
+  }
+  .modal-backdrop{
+  z-index: 0 !important;
+  }
+  .trn-btn{
+  margin-left: 180px;
+  }
+  .edit-btn{
+  margin-left: 18px;
+  width: 30% !important;
+  }
+  .edit-btn1{
+  margin-left: 18px;
+  width: 30% !important;
+  }
+  .butns-stle{
+  background-color: rgb(78, 129, 189);
+  border: 1px solid #4e81bd;
+  border-radius: 0;
+  box-shadow: 0 2px 1px #b7b7b7;
+  color: #fff;
+  font-size: 17px;
+  text-align: center;
+  width: 20%;
+  }
+  .butns-stle1{
+  border: 1px solid #D2322D;
+  border-radius: 0;
+  box-shadow: 0 2px 1px #b7b7b7;
+  color: #fff;
+  font-size: 17px;
+  text-align: center;
+  width: 28%;
+  }
+  .butns-stle2{
+  border: 1px solid #47A447;
+  border-radius: 0;
+  box-shadow: 0 2px 1px #b7b7b7;
+  color: #fff;
+  font-size: 17px;
+  text-align: center;
+  width: 36%;
+  }
+  .btn:hover, .btn:focus{
+  color: #fff !important;
+  text-decoration: none;
+  }
+</style>
+

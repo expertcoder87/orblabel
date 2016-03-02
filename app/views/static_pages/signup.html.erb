@@ -1,0 +1,95 @@
+<%= render "shared/header" %>
+
+<!-- container -->
+<div class="container">
+
+    <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">Solicitar Conta</li>
+    </ol>
+
+    <div class="row">
+
+        <!-- Article main content -->
+        <article class="col-xs-12 maincontent">
+            <header class="page-header">
+                <h1 class="page-title">Solicitar Conta</h1>
+            </header>
+
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3 class="thin text-center">Seja uma loja autorizada ORBLabel</h3>
+                        <p class="text-center text-muted">Deixe seus dados e aguarde o contato da nossa equipe.</p>
+                        <hr>
+
+                        <form>
+                            <div class="top-margin">
+                                <label>Nome da loja ou revenda<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="top-margin">
+                                <label>Razão social<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control">
+                            </div>
+
+                            <div class="top-margin">
+                                <label>CNPJ<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" maxlength="14">
+                            </div>
+
+                            <div class="top-margin">
+                                <label>Telefone<span class="text-danger">*</span></label>
+                                <div class="form-inline">
+                                    <input type="text" class="form-control" maxlength="2" placeholder="DDD" size="4">&nbsp;&nbsp; <input type="text" class="form-control" maxlength="9" placeholder="Número">
+                                </div>
+                            </div>
+
+                            <div class="top-margin">
+                                <label>Endereço<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="Rua, Avenida...">
+                                <br>
+                                <div class="form-inline">
+                                    <input type="text" class="form-control" maxlength="4" placeholder="Número" size="8">&nbsp;&nbsp;
+                                    <input type="text" class="form-control" placeholder="Complemento" size="30">&nbsp;&nbsp;
+                                    <input type="text" class="form-control" maxlength="10" placeholder="CEP" size="15">
+                                </div>
+                                <br>
+                                <div class="form-inline">
+                                    <input type="text" class="form-control" placeholder="Cidade" size="30">&nbsp;&nbsp; <input type="text" class="form-control" maxlength="2" placeholder="Estado" size="8">
+                                </div>
+                            </div>
+
+                            <div class="top-margin">
+                                <label>Nome do responsável<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="top-margin">
+                                <label>E-mail<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control">
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <label class="checkbox">
+                                        <input type="checkbox">
+                                        Li e estou de acordo com os <a href="/termos-de-uso">Termos de Uso</a>
+                                    </label>
+                                </div>
+                                <div class="col-lg-4 text-right">
+                                    <button class="btn btn-success" type="submit">SOLICITAR</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </article>
+        <!-- /Article -->
+
+    </div>
+</div>	<!-- /container -->

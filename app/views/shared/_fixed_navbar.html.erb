@@ -1,0 +1,47 @@
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top headroom" >
+    <div class="container">
+        <div class="navbar-header">
+            <!-- Button for smallest screens -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+			<a class="navbar-brand" href="/"><%= image_tag 'static_pages/orb-label-logo.png', alt: "ORBLabel", title: "ORBLabel" %></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav pull-right">
+                <li class="<%= 'active' if current_page?('/') %>"><a title="Consultar Bicicleta" href="/">CONSULTAR BICICLETA</a></li>
+                <li class="<%= 'active' if current_page?('/sobre') %>"><a title="Sobre" href="/sobre">SOBRE</a></li>
+                <li class="<%= 'active' if current_page?('/contato') %>"><a title="Contato" href="/contato">CONTATO</a></li>
+                <% if current_store.present? %>
+                <li class="<%= 'active' if current_page?('/acesso-da-loja') %>">
+                    <%= form_tag destroy_store_session_path, :method => 'delete' do %>
+                    <%= submit_tag "ACESSO DA LOJA",:id=>"sair-btn"%>
+                <%end%></li>
+                <%else%>
+                <li class="<%= 'active' if current_page?('/acesso-da-loja') %>"><a title="Acesso da Loja" href="/acesso-da-loja" class="session-check">ACESSO DA LOJA</a></li> 
+                <%end%>
+                <li class="<%= 'active' if current_page?('/lojas-autorizadas') %>"><a title="lojas-autorizadas" href="/lojas-autorizadas">LOJAS AUTORIZADAS</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<!-- /.navbar -->
+
+<style type="text/css">
+    
+    #sair-btn{
+        padding-top: 15px;
+        border: 0px;
+        background-color: transparent;
+    }
+    #sair-btn:hover{
+        color: #bababa;
+    }
+</style>
+
+
+
+

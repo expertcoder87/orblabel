@@ -1,0 +1,2 @@
+class CertifiedBikesController < ApplicationController
+end

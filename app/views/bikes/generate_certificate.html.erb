@@ -1,0 +1,78 @@
+<div id="page-wrapper">
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Certificados</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-14">
+    <%= link_to "Certificados",admin_certificate_path %>&nbsp;&nbsp;&nbsp;
+    <%= link_to "Generate Certificados",admin_genarate_certificate_path%>&nbsp;&nbsp;&nbsp;
+    <%= link_to "Store Alert",store_alert_path %>
+    <hr>
+    <div class="panel panel-default pnl-wdth">
+      <div class="panel-heading">Generate Certificados </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <p class="notice"><%= notice %></p>
+            <%= form_tag admin_genarate_certificate_path, :method => 'get' do %>
+            <%= submit_tag "Generate Certificate",:class=>"gnt-btn btn btn-info"%>
+            <%= submit_tag "Generate Certificate List",:class=>"gnt-btn-lst btn btn-info"%>
+            <p class="btn-gnt"><strong><%= @certificate %></strong></p>
+            <div id="show-certificate-list">
+              <% if @certificates.present? %>
+              <p><%= @certificates %></p>
+              <br/>
+              <%end%>
+            </div>
+            <%end%>   
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $("#show-certificate-list").hide();
+  
+  $(".gnt-btn-lst").click(function(){
+      var html = $("#show-certificate-list").html();
+       var w = window.open();
+       $(w.document.body).html(html); 
+  });
+  
+</script>
+<style type="text/css">
+  .pnl-wdth{
+  width: 520px;
+  }
+  .btn-gnt{
+  margin-left: 150px;
+  font-size: 25px;
+  }
+  .gnt-btn{
+  margin-left: 140px;
+  margin-top: -20px;
+  margin-bottom: 35px;
+  }
+  .gnt-btn-lst{
+  margin-left: 310px;
+  margin-top: -127px;
+  }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

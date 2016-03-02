@@ -1,0 +1,45 @@
+
+
+<!-- <h2>Change your password</h2> -->
+<%= render "shared/header" %>
+<!-- container -->
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="/acesso-da-loja">Acesso da Loja</a></li>
+    <li class="active">Esqueceu a Senha?</li>
+  </ol>
+  <div class="row">
+    <!-- Article main content -->
+    <article class="col-xs-12 maincontent">
+      <header class="page-header"></header>
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h3 class="thin text-center">Crie uma nova senha</h3>
+            <!-- <p class="text-center text-muted">Por favor, redefinir sua senha abaixo.</p> -->
+            <p class="notice"><%= notice %></p>
+            <hr>
+            <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+            <%= hidden_field_tag :store_id, @store_id %>
+            <div class="top-margin">
+              <label>Nova senha<span class="text-danger">*</span></label>
+              <%= f.password_field :password, autofocus: true, autocomplete: "off",:class=>"form-control"%>
+            </div>
+            <div class="top-margin">
+              <label>Confirmação de senha<span class="text-danger">*</span></label>
+              <%= f.password_field :password_confirmation, autocomplete: "off",:class=>"form-control" %>
+            </div>
+            <br>
+            <div class="actions">
+              <%= f.submit "CRIAR",:class=> "btn btn-success" %>
+            </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+  </div>
+  </article>
+  <!-- /Article -->
+</div>
+</div>  <!-- /container -->
+

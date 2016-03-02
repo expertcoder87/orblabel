@@ -1,0 +1,280 @@
+<%= render "shared/header" %>
+<!-- container -->
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+  </ol><hr/>
+  <div class="row">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+           <h3 class=""><b>Online Bike Record</b><br/><br/><h4 style="margin-top: -32px;">Certificado:<b><%= @bike.certification%></b></h4></h3><hr>
+          <% if @robery == true %>
+          <h5 style="color: red;">Esta bicicleta tem um alerta de roubo! As funcionalidades associadas com esta bicicleta não estão disponíveis.</h5>
+          <%end%>
+              <div class="panel-body">
+                <div class="row col-lg-11">
+                  <p class="notice"><%= notice %></p>
+                  <table class="table table-striped" style="width:35%;margin-left:15px">
+                    <% if @store_owner.present? %>
+                     <p><b>Conta do proprietário:</b></p>
+                      <tr>
+                        <th style="border-top: 2px solid #000;">Nome</th>
+                       <td style="border-top: 2px solid #000;"><%= @store_owner.responsible_name %></td>
+                      </tr>
+                      <tr>
+                        <th>E-mail</th>
+                        <td><%= @store_owner.email %></td>
+                      </tr>
+                      <tr>
+                        <th style="border-bottom: 2px solid #000;">Telefone</th>
+                        <td style="border-bottom: 2px solid #000;">(<%= @store_owner.area_code%>) <%= @store_owner.phone_number.insert(5, '-') %></td>
+                      </tr>
+                      <%end%>
+                  </table>
+                  <table class="table table-striped" style="width:35%;margin-left:15px">
+                  <% if @certified_bike.present? %>
+                  <p><b>Dados da bicicleta:</b></p>
+                  <tr>
+                    <th style="border-top: 2px solid #000;">Marca:</th>
+                    <td style="border-top: 2px solid #000;"><%=@certified_bike.brand %></td>
+                  </tr>
+                  <tr>
+                    <th>Modelo</th>
+                    <td><%=@certified_bike.model %></td>
+                  </tr>
+                  <tr>
+                    <th>Tamanho</th>
+                    <td>
+                      <% if @certified_bike.size == 0 %>
+                      Pequeno
+                      <% elsif @certified_bike.size == 1 %>
+                      Médio
+                      <% elsif @certified_bike.size == 2 %>
+                      Grande
+                      <% elsif @certified_bike.size == 3 %>
+                      Extra-Grande
+                      <%else%>
+                      Não selecionado
+                      <%end%>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Fabricação</th>
+                    <td><%=@certified_bike.building_date %></td>
+                  </tr>
+                  <tr>
+                    <th style="border-bottom: 2px solid #000;">Número de Série</th>
+                    <td style="border-bottom: 2px solid #000;"><%=@certified_bike.serial_number %></td>
+                  </tr>
+                  <%end%>
+                </table>
+                <table class="table table-striped"style="width:80%;margin-left:15px;border-top: 2px solid #000;border-bottom: 2px solid #000;">
+                    <p><b>Peças:</b></p>
+                    <tr>
+                      <th>Peça</th>
+                      <th>Marca</th>
+                      <th>Modelo</th>
+                      <th>Fabricação</th>
+                      <th>Número de Série</th>
+                    </tr>
+                    <% if @bike_parts.present? %>
+                    <% @bike.bike_parts.each do |bike_part| %>
+                    <tr>
+                      <td>
+                        <% if bike_part.bike_part_type == 0 %>
+                        Quadro
+                        <% elsif bike_part.bike_part_type == 1 %>
+                        Garfo
+                        <% elsif bike_part.bike_part_type == 2 %>
+                        Rodas
+                        <%else%>
+                        Não selecionado
+                        <%end%>
+                      </td>
+                      <td><%= bike_part.brand %></td>
+                      <td><%= bike_part.model %></td>
+                      <td><%= bike_part.building_date %></td>
+                      <td><%= bike_part.serial_number %></td>
+                      <%end%>
+                    </tr>
+                    <%end%>
+                  </table>
+                  <table class="table table-striped" style="width:80%;margin-left:15px;border-top: 2px solid #000;border-bottom: 2px solid #000;">
+                    <p><b>Manutenções:</b></p>
+                    <tr>
+                      <th>Data</th>
+                      <th>Descrição</th>
+                      <th>Recibo / Nota</th>
+                    </tr>
+                    <% if @maintenance_events.present? %>
+                    <% @maintenance_events.each do |bike_event| %>
+                    <tr>
+                      <td><%= bike_event.updated_at.strftime("%d/%m/%Y")%></td>
+                      <td><%= bike_event.description %></td>
+                      <td><%=image_tag bike_event.maintenance_receipt_image %></td>
+                    </tr>
+                    <%end%>
+                    <%end%>
+                  </table>
+                  <table class="table table-striped" style="width:80%;margin-left:15px;border-top: 2px solid #000;border-bottom: 2px solid #000;">
+                  <% if @date_of_sales.present? %>
+                    <p><b>Vendas:</b></p>
+                    <tr>
+                      <th>Data</th>
+                      <th>Recibo / Nota</th>
+                    </tr>
+                      <% @date_of_sales.each do |date_of_sales|%>
+                    <tr>
+                        <td><%= date_of_sales.updated_at.strftime("%d/%m/%Y") %></td>
+                        <td><%= image_tag date_of_sales.receipt%></td>
+                    </tr>
+                    <%end%>
+                  <%end%>
+                </table>
+                <table class="table table-bordered" style="width:35%;border-top:0px;">
+                  <p><b style="font-size: 20px;">Foto:</b></p>
+                  <tr>
+                    <td style="border-top: 0px none;"><%= image_tag @certified_bike.bike_image%></td>
+                  </tr>
+                  </table> <br/><br/>
+                    <a class="btn btn butns-stle acc-pro-btn owner-access-open-model">Acesso do proprietário</a><br/>
+                    <a class="frgt-pwd-lnk forget-pwd-model-open"><b>Esqueci meu código de acesso?</b></a>
+
+                    <!-- Owner Acceess model start-->
+                    <div id="owner-access-add-model" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">PROPRIETÁRIO</h4>
+                          </div>
+                          <div class="modal-body">
+                            <%= form_tag certified_number_path, :method => 'get' do %>
+                            <%= hidden_field_tag :certification,params[:certification]%>
+                            <label>Digite seu código de acesso:</label>
+                            <%= text_field_tag :access_code, params[:access_code],:class=>"form-control "%><br>
+                            <hr/>
+                            <%= submit_tag "ACESSAR",:class=>"btn btn-success acs-btn butns-stle1"%>
+                            <%end%>   
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  
+                  <!--Owner Access Model End -->
+                  <!-- Forget Password Model -->
+                  <div id="forget-pwd-add-model" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title">Esqueci meu código de acesso</h4>
+                        </div>
+                        <div class="modal-body">
+                          <%= form_tag certified_number_path, :method => 'get' do %>
+                          <%= hidden_field_tag :certification,params[:certification]%>
+                          <label>CPF</label>
+                          <%= text_field_tag :cpf,nil,:class=>"form-control ",:id=>"p_cpf"%><br>
+                          <label>E-mail</label>
+                          <%= text_field_tag :email,nil,:class=>"form-control ",:id=>"p_email" %><br>
+                          <hr/>
+                          <%= submit_tag "ENVIAR",:class=>"btn btn-success acs-btn butns-stle1"%>
+                          <%end%>   	
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Forget Password Model End -->
+                </div>
+              </div>
+            </div>
+        </div>
+    <!-- col-lg-12 end -->
+  </div>
+</div>
+</div><!-- Row End -->
+</div>	<!-- /container -->
+
+
+
+
+<style type="text/css">
+		.acc-pro-btn{
+			 margin-left: 20px;
+      margin-top: -17px;
+		}
+		.modal-dialog {
+		  margin-left: -300px !important;  
+		  width: 502px !important;
+		}
+		.acs-btn{
+			margin-left: 160px;
+		}
+		.frgt-pwd-lnk{
+			margin-left: 39px;
+		}
+    .butns-stle{
+    background-color: rgb(78, 129, 189);
+    color: #fff;
+    }
+    .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: #dddddd;
+  }
+  .butns-stle{
+    background-color: rgb(78, 129, 189);
+    border: 1px solid #4e81bd;
+    border-radius: 0;
+    box-shadow: 0 2px 1px #b7b7b7;
+    color: #fff;
+    font-size: 17px;
+    text-align: center;
+    width: 28%;
+  }
+  .butns-stle:hover{
+     color: #fff !important;
+    text-decoration: none;
+  }
+  .butns-stle1{
+    border: 1px solid #47A447;
+    border-radius: 0;
+    box-shadow: 0 2px 1px #b7b7b7;
+    color: #fff;
+    font-size: 17px;
+    text-align: center;
+    width: 36%;
+  }
+</style>
+
+<script type="text/javascript">
+    $("#p_cpf").mask("999.999.999-99");
+</script>
+
+<script type="text/javascript">
+
+	var ps_cpf = new LiveValidation('p_cpf')
+	ps_cpf.add( Validate.Presence )
+	ps_cpf.add( Validate.Length, { minimum: 11 } );
+
+	var ps_email = new LiveValidation('p_email')
+	ps_email.add( Validate.Presence )
+	ps_email.add( Validate.Email )
+
+   $(".owner-access-open-model").click(function(){
+      $("#owner-access-add-model").modal('show')
+   });
+
+   $(".forget-pwd-model-open").click(function(){
+      $("#forget-pwd-add-model").modal('show')
+   });
+
+
+</script>
+
+
+
+
+
+
+
+

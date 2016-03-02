@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+   		<title>Lean Spec</title>
+		<%= stylesheet_link_tag 'custom/application'%>
+	  	<%= javascript_include_tag 'custom/application'%>
+	</head>
+	
+	<body>
+	  	<%= render "store_theme/head" %>
+	  	<p class="notice"></p>
+	  	<%=yield%>
+	</body>
+</html>

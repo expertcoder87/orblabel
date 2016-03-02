@@ -1,0 +1,234 @@
+<div id="page-wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+      <h3 class="page-header">Cadastrar Bicicleta</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-9">
+      <% if (current_store.roles.first.name == "Store_Admin").present?%>
+      <%= link_to 'New Cadastrar Bicicleta',new_bike_path,:class=>"nw-btn1 btn btn-outline btn-info"%><br><br>
+      <%= link_to 'Back',admin_bike_path,:class=>"btn btn-outline btn-info bc-btn" %>
+      <%else%>
+      <%end%>
+      <div class="panel panel-default">
+        <div class="panel-heading">&nbsp;</div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-lg-11">
+              <p class="notice"><%= notice %></p>
+              <table class="table table-striped table-bordered table-hover table" style="margin-left:25px;">
+                <p><b>Bicicleta Detalhes:</b></p>
+                <tr>
+                  <th>Marca</th>
+                  <td><%=@bike.brand %></td>
+                </tr>
+                <tr>
+                  <th>Modelo</th>
+                  <td><%=@bike.model %></td>
+                </tr>
+                <tr>
+                  <th>Tamanho</th>
+                  <td>
+                    <% if @bike.size == 0 %>
+                    Pequeno
+                    <% elsif @bike.size == 1 %>
+                    Médio
+                    <% elsif @bike.size == 2 %>
+                    Grande
+                    <% elsif @bike.size == 3 %>
+                    Extra Grande
+                    <%else%>
+                    Not Selected
+                    <%end%>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Fabricação</th>
+                  <td><%=@bike.building_date %></td>
+                </tr>
+                <tr>
+                  <th>Número de Série</th>
+                  <td><%=@bike.serial_number %></td>
+                </tr>
+              </table>
+              <strong>Foto:</strong><br/>
+              <p class="tble">
+                <%= image_tag @bike.bike_image %>
+              </p>
+              <br>
+              <div class="form-group">
+                <% if !@bike.bike_image_file_name.present? %>
+                <%= form_for Bike.new,:url=>bike_part_create_path do |bike_image|%>
+                <%= hidden_field_tag :bike_id,@bike.id %>
+                <%= bike_image.label(:bike_image, 'Enviar_Imagem')%><br>
+                <%= bike_image.file_field :bike_image%>
+                <%= bike_image.submit "Add",:class=>"add-btn btn btn-success"%>
+                <%end%>
+                <%end%>
+              </div>
+              <p><b>Peças:</b>&nbsp;&nbsp;&nbsp;<a class="show_bike_part"><small class="btn btn-info">Adicionar Peça</small></p></a>
+              <% if !@bike.bike_parts.nil? %>
+                <% @bike.bike_parts.each do |bike_part|%>
+                <% if !bike_part.bike_part_type.nil?%><br/>
+                <a class="part-type fa fa-play" id="part-type_<%= bike_part.id%>"></a>
+                  <span style="color:#428bca; float:left; margin-left:8px; min-width:60px;">
+                   <% if bike_part.bike_part_type == 0 %>
+                    Garfo
+                   <% elsif bike_part.bike_part_type == 1%>
+                    Rodas
+                   <% elsif bike_part.bike_part_type == 2%>
+                    Quadro
+                   <% else %>
+                     Not Available
+                   <%end%></span>&nbsp;&nbsp;&nbsp;<td><%= link_to "X",bike_part_destroy_path(bike_part.id),:class=>"part-close"%></td><br/>
+                <%end%>
+            <div class="part-expnd" id="part-expnd_<%= bike_part.id%>">
+                <table class="table table-striped table-bordered table-hover table"><br/>
+                  <tr>
+                  <th>Troca de</th>
+                    <td>
+                     <% if bike_part.bike_part_type == 0 %>
+                      Garfo
+                     <% elsif bike_part.bike_part_type == 1%>
+                      Rodas
+                     <% elsif bike_part.bike_part_type == 2%>
+                      Quadro
+                     <% else %>
+                      Not Available
+                      <%end%>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Marca</th>
+                    <td><%= bike_part.brand %></td>
+                  </tr>
+                  <tr>
+                    <th>Modelo</th>
+                    <td><%= bike_part.model%></td>
+                  </tr>
+                  <tr>
+                    <th>Data de fabricação</th>
+                    <td><%= bike_part.building_date%></td>
+                  </tr>
+                  <tr>
+                    <th>Número de Série</th>
+                    <td><%= bike_part.serial_number %></td>
+                  </tr>
+                  </table>
+                 </div>
+                <%end%>
+              <%end%>
+            </div>
+          </div>
+          <div id="part-show-model" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                 <h4 class="modal-title">Bicicleta Peças</h4>
+              </div>
+                <div class="modal-body">
+                  <div class="bike_part_show">
+                  <%= form_for(BikePart.new,url: bike_part_create_path, html: { method: :post }) do |bike_part| %>
+                    <%= hidden_field_tag :bike_id,params[:id] %>
+                    <div class="form-group">
+                      <%= bike_part.label(:bike_part_type, 'Tipo da Peça')%><br>
+                      <%= bike_part.select(:bike_part_type,BikePart.part_types.to_a,{:prompt => 'Escolha uma opção'},{:class=> 'form-control m-b',:id=>"bike-part-type" })%>
+                    </div>
+                    <div class="form-group">
+                      <%= bike_part.label(:brand, 'Marca')%><br>
+                      <%= bike_part.text_field :brand,:class=>"form-control",:id=>"bike-part-brand" %>
+                    </div>
+                    <div class="form-group">
+                      <%= bike_part.label(:model, 'Modelo')%><br>
+                      <%= bike_part.text_field :model,:class=>"form-control",:id=>"bike-part-model"%>
+                    </div>
+                    <div class="form-group">
+                      <%= bike_part.label(:building_date, 'Fabricação')%><br>
+                      <%= bike_part.text_field :building_date,:class=>"datepicker form-control",:required=>true %>
+                    </div>
+                    <div class="form-group">
+                      <%= bike_part.label(:serial_number, 'Número de Sérieção')%><br>
+                      <%= bike_part.text_field :serial_number,:class=>"form-control",:id=>"bike-part-"%>
+                    </div><hr/>
+                    <div class="form-group">
+                      <%= bike_part.submit "CADASTRAR PECA",:class=>"btn btn-success create_btn" %>
+                    </div>
+                  <%end%>
+                </div> 
+             </div>
+            </div>
+            </div>
+          </div>
+        </div><hr>
+        <%= link_to "PROSSEGUIR",bike_bike_part_details_path(:id=>params[:id]),:class=>"butns-stle1 btn btn-success"%><br/><br/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Page Wrapper -->
+
+<style type="text/css">
+.create_btn{
+  margin-left: 190px;
+}
+
+.btn-info {
+    background-color: #edece0 !important;
+    border-color: #000 !important;
+    color: #000 !important;
+}
+.butns-stle1{
+    border: 1px solid #47A447;
+    border-radius: 0;
+    box-shadow: 0 2px 1px #b7b7b7;
+    color: #fff;
+    font-size: 17px;
+    text-align: center;
+    width: 25%;
+    margin-left: 280px;
+  }
+.part-type {
+    font-size: 16px;
+    margin-bottom: 6px;
+    text-shadow: 0 1px 4px #666;
+    margin-left: 20px;
+    float: left;
+}
+.part-close{
+  font-size: 16px;
+    line-height: normal;
+}
+</style>
+
+<script type="text/javascript">
+  $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
+
+    $(".part-expnd").each(function(){ $(this).hide(); });
+    $(".part-type").click(function(){
+      var id = this.id.split("_")[1] 
+      $("#part-expnd_"+id).toggle();
+    });
+
+    $(".show_bike_part").click(function(){
+      $("#part-show-model").modal('show');
+    });
+  
+    var bike_part_type = new LiveValidation('bike-part-type');
+    bike_part_type.add( Validate.Presence );
+  
+    var bike_part_brand = new LiveValidation('bike-part-brand');
+    bike_part_brand.add( Validate.Presence );
+  
+    var bike_part_model = new LiveValidation('bike-part-model');
+    bike_part_model.add( Validate.Presence );
+  
+    var bike_part_date = new LiveValidation('bike-part-date');
+    bike_part_date.add( Validate.Presence );
+  
+    var bike_part_serial = new LiveValidation('bike-part-serial');
+    bike_part_serial.add( Validate.Presence );
+  
+</script>

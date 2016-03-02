@@ -1,0 +1,39 @@
+<p>Welcome <%= @bike.email %>!</p>
+
+<h3>Vender Bicicleta Detalhes</h3>
+
+<p><b>Personal Details:</b></p>
+
+<p><b>Nome:</b><%= @bike.name %></p>
+<p><b>CPF:</b><%= @bike.cpf %></p>
+<p><b>Código de Área:</b><%= @bike.area_code %></p>
+<p><b>Celular:</b><%= @bike.cell_phone_number %></p><br>
+
+<b><p><b>Address Details:</p></b>
+
+<p><b>Endereço:</b><%= @bike.street %>
+<p><b>Número:</b><%= @bike.number %>
+<p><b>Complemento:</b><%= @bike.district %>
+<p><b>CEP:</b><%= @bike.zipcode %>
+<p><b>Cidade:</b><%= @bike.city %>
+<p><b>Estado:</b><%= @bike.state %>
+<br>
+<p><b>Bike Price Details:</b></p>
+<p><b>Preço de venda:</b><%= @bike.selling_price %></p>
+<br>
+<p><b>Certificate Details:</b></p>
+<p><b>Número do certificado:</b><%= @bike.certification %></p>
+<br>
+<p><b>Access Code:</b></p>
+<p><b>Access Code:</b><%= @bike.access_code %></p>
+<br>
+<b><p>Receipt Details:</p></b>
+<p><%= image_tag attachments[@receipt].url %></p>
+<br/>
+
+<p><b><i>Thank You !!!!</i></b></p>
+
+
+
+
+

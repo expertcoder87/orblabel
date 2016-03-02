@@ -1,0 +1,45 @@
+<div id="page-wrapper">
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Generate New AccessCode</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-14">
+    <%= link_to "Certificados",admin_certificate_path %>&nbsp;&nbsp;&nbsp;
+    <%= link_to "Generate Certificados",admin_genarate_certificate_path%>&nbsp;&nbsp;&nbsp;
+    <%= link_to "Store Alert",store_alert_path %>&nbsp;&nbsp;&nbsp;
+    <%= link_to 'Back',admin_certificate_path%>
+    <hr>
+    <div class="panel panel-default pnl-wdth">
+      <div class="panel-heading"><%= params[:id]%></div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <p class="notice"><%= notice %></p>
+            <%= form_tag admin_access_code_path(params[:id]), :method => 'get' do %>
+            <%= submit_tag "Click To Generate",:class=>"gnt-btn btn btn-info"%><br/><br/>
+            <p class="acs-txt"><%= @access_code %></p>
+            <%end%>   
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+  .pnl-wdth{
+  width: 500px;
+  }
+  .gnt-btn{
+  margin-left: 160px;
+  }
+  .acs-txt{
+  margin-left: 100px;
+  font-size: 25px;
+  font-weight: bold;
+  }
+</style>
+

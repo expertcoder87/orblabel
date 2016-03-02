@@ -1,0 +1,44 @@
+
+
+<!-- <h2>Resend confirmation instructions</h2> -->
+<%= render "shared/header" %>
+<!-- container -->
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="/acesso-da-loja">Acesso da Loja</a></li>
+    <li class="active">Esqueceu a Senha?</li>
+  </ol>
+  <div class="row">
+    <!-- Article main content -->
+    <article class="col-xs-12 maincontent">
+      <header class="page-header">
+        <h1 class="page-title">Esqueceu a Senha?</h1>
+      </header>
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h3 class="thin text-center">Reenviar E-Mail De Confirmação</h3>
+            <p class="text-center text-muted">digite seu e-mail para reenviar o e-mail de confirmação para sua conta</p>
+            <p class="notice"><%= notice %></p>
+            <hr>
+            <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+            <div class="top-margin">
+              <label>E-mail <span class="text-danger">*</span></label>
+              <%= f.email_field :email, autofocus: true,:class=>"form-control" %>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-lg-4 text-right">
+                <%= f.submit "Reenviar instruções de confirmação",:class=>"btn btn-success resend-btn" %>
+              </div>
+            </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+  </div>
+  </article>
+  <!-- /Article -->
+</div>
+</div>  <!-- /container -->
+

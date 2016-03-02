@@ -1,0 +1,106 @@
+
+<%= render "shared/header" %>
+
+<!-- container -->
+<div class="container">
+
+	<ol class="breadcrumb">
+		<li><a href="/">Home</a></li>
+		<li class="active">Contato</li>
+	</ol>
+	<p class="notice" style="margin-left: 350px;"><%= notice %></p>
+	<div class="row">
+
+		<!-- Article main content -->
+		<article class="col-sm-9 maincontent">
+			<header class="page-header">
+				<h1 class="page-title">Contato</h1>
+			</header>
+
+			<p>
+				We’d love to hear from you. Interested in working together? Fill out the form below with some info about your project and I will get back to you as soon as I can. Please allow a couple days for me to respond.
+			</p>
+			<br>
+					<%= form_for(Contact.new,:url=>contact_path) do |c| %>
+						<div class="row">
+							<div class="col-sm-4">
+								<%= c.text_field :name,:class=>"form-control",:placeholder=>"Nome",:id=>"c_name"%>
+							</div>
+							<div class="col-sm-4">
+								<%= c.text_field :email,:class=>"form-control",:placeholder=>"E-mail",:id=>"c_email"%>
+							</div>
+							<div class="col-sm-4">
+								<%= c.text_field :phone_number,:class=>"form-control",:placeholder=>"Telefone",:id=>"c_telephone"%>
+							</div>
+						</div><br>
+						<div class="row">
+							<div class="col-sm-12">
+								<%= c.text_area :description,:class=>"form-control txt-high",:placeholder=>"Escreva sua mensagem aqui...",:id=>"c_description"%>
+							</div>
+						</div><br>
+						<div class="row">
+							<div class="col-sm-6">
+								<label class="checkbox">
+								<%= c.check_box :communication_check  %> Desejo receber conteúdos e comunicados </label>
+							</div>
+							<div class="col-sm-6 text-right">
+								<%= c.submit "ENVIAR",:class=>"btn btn-success"%>
+							</div>
+						</div>
+					<%end%>
+		</article>
+		<!-- /Article -->
+
+		<!-- Sidebar -->
+		<aside class="col-sm-3 sidebar sidebar-right">
+
+			<div class="widget side_contato">
+				<h4>E-mail</h4>
+				<address>
+					contato@orblabel.com
+				</address>
+				<h4>Telefone</h4>
+				<address >
+				(713) 791-1414
+				</address>
+			</div>
+
+		</aside>
+		<!-- /Sidebar -->
+
+	</div>
+</div>	<!-- /container -->
+
+
+<script type="text/javascript">
+	var publicname = new LiveValidation('c_name');
+   	publicname.add( Validate.Presence );
+
+	var c_e_mail = new LiveValidation('c_email')
+	c_e_mail.add( Validate.Presence )
+	c_e_mail.add( Validate.Email )
+
+	var c_phone = new LiveValidation('c_telephone')
+	c_phone.add( Validate.Presence )
+
+	var c_desc = new LiveValidation('c_description')
+	c_desc.add( Validate.Presence )
+
+</script>
+
+
+<style type="text/css">
+.sidebar {
+    margin-top: 0px;
+    position: inherit;
+    width: auto;
+    z-index: 1;
+}
+.side_contato{
+	margin-left: 0px;
+}
+.txt-high{
+	height: 200px !important;
+}
+</style>
+

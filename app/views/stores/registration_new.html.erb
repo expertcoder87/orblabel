@@ -1,0 +1,179 @@
+
+
+<%= render "shared/header" %>
+<!-- container -->
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">Solicitar Conta</li>
+  </ol>
+  <div class="row">
+    <!-- Article main content -->
+    <article class="col-xs-12 maincontent">
+      <header class="page-header">
+        <h1 class="page-title">Solicitar Conta</h1>
+      </header>
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h3 class="thin text-center">Seja uma loja autorizada ORBLabel</h3>
+            <p class="text-center text-muted">Deixe seus dados e aguarde o contato da nossa equipe.</p>
+            <br/>
+            <hr/>
+            <%= form_for(@store,:url=>admin_sign_up_path) do |f|%>
+            <p class="notice" style="color: red;"><%= notice %></p>
+            <div class="form-group">
+              <%= f.label :public_name, 'Nome da loja ou revenda<span class="text-danger">*</span>'.html_safe %>
+              <%= f.text_field :public_name, :class => "form-control",:id=>"public_name" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :legal_name, 'Razão social<span class="text-danger">*</span>'.html_safe %>
+              <%= f.text_field :legal_name, :class => "form-control",:id=>"legal_name" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :cnpj, 'CNPJ<span class="text-danger">*</span>'.html_safe %>
+              <%= f.text_field :cnpj, :class => "form-control", :maxlength => "14",:id=>"cnpj" %>
+            </div>
+            <div class="form-group">
+              <label>Telefone<span class="text-danger">*</span></label>
+              <div class="form-inline">
+                <%= f.text_field :area_code, :class => "form-control", :maxlength => "2", :placeholder => "DDD", :size => "4",:id=>"area_code" %>
+                &nbsp;&nbsp;
+                <%= f.text_field :phone_number, :class => "form-control", :maxlength => "9", :placeholder => "Número",:id=>"phone_number" %>
+              </div>
+            </div>
+            <div class="fields">
+              <label>Endereço<span class="text-danger">*</span></label><br/>
+              <%= f.fields_for :address do |address_form| %>
+              <%= address_form.text_field :street,:class => "wdth-frm form-control",:placeholder => "Rua, Avenida...",:id=>"street" %><br/>
+              <div class="form-inline">
+                <%= address_form.text_field :number, :class => "form-control", :maxlength => "4", :placeholder => "Número", :size => "8",:id=>"number" %>
+                &nbsp;&nbsp;
+                <%= address_form.text_field :district, :class => "form-control",:placeholder => "Complemento",:size => "30",:id=>"district" %><br>
+                <%= address_form.text_field :zipcode, :class => "form-control", :maxlength => "10", :placeholder => "CEP", :size => "15",:id=>"zipcode" %>
+              </div>
+              <br>
+              <div class="form-inline">
+                <%= address_form.text_field :city, :class => "form-control", :placeholder => "Cidade", :size => "30",:id=>"city" %>
+                &nbsp;&nbsp;
+                <%= address_form.text_field :state, :class => "form-control", :maxlength => "2", :placeholder => "Estado", :size => "8",:id=>"state" %>
+              </div>
+              <%end%>
+            </div>
+            <br/>
+            <div class="form-group">
+              <label>Nome do responsável<span class="text-danger">*</span></label>
+              <%= f.text_field :responsible_name, :class => "form-control",:id=>"responsiblename" %> 
+            </div>
+            <div class="form-group">
+              <label>E-mail<span class="text-danger">*</span></label>
+              <%= f.text_field :email, :class => "form-control",:placeholder=>"example@example.com",:id=>"email" %>
+            </div>
+            <div class="top-margin">
+              <label>Password<span class="text-danger">*</span></label>
+              <% if @minimum_password_length %>
+              <em>(<%= @minimum_password_length %> characters minimum)</em>
+              <% end %>
+              <%= f.password_field :password, autocomplete: "off",:class => "form-control",:id=>"password" %>
+            </div>
+            <br/>
+            <div class="form-group">
+              <label>Password Confirmation<span class="text-danger">*</span></label>  
+              <%= f.password_field :password_confirmation, autocomplete: "off",:class => "form-control",:id=>"passwordconfirmation" %>
+            </div>
+            <hr/>
+            <div class="row">
+              <div class="col-lg-8" style="margin-left: 0px;">
+                <label class="checkbox">
+                <%= f.check_box :checkbox,:id=>"check_box",:required=>true%>
+                Li e estou de acordo com os <a href="<%= termos_de_uso_path%>">Termos de Uso</a>
+                </label>
+              </div>
+              <div class="col-lg-4" style="margin-top: -40px; margin-left: 355px;">
+                <%= f.submit "SOLICITAR",:class=>"btn btn-success"%>
+              </div>
+            </div>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </article>
+    <!-- /Article -->
+  </div>
+</div>
+<!-- /container -->
+<style type="text/css">
+  .adn-crt{
+  margin-left: 340px;
+  }
+  .wdth-frm{
+  width: 510px;
+  }
+</style>
+
+<script type="text/javascript">
+  $("#cnpj").mask("99.999.999/9999-99");
+</script>
+<script type="text/javascript">
+  var publicname = new LiveValidation('public_name');
+  publicname.add( Validate.Presence );
+  
+  var legalname = new LiveValidation('legal_name');
+  legalname.add(Validate.Presence)
+  
+  var areacode = new LiveValidation('area_code')
+  areacode.add(Validate.Presence)
+  areacode.add(Validate.Length,{ minimum: 2} );
+  
+  var phonenumber = new LiveValidation('phone_number')
+  phonenumber.add( Validate.Presence )
+  phonenumber.add(Validate.Numericality)
+  phonenumber.add(Validate.Length,{ minimum: 9} );
+  
+  var street = new LiveValidation('street')
+  street.add(Validate.Presence)
+  
+  var number = new LiveValidation('number')
+  number.add( Validate.Presence )
+  number.add(Validate.Numericality)
+  number.add(Validate.Length, { minimum: 4} );
+  
+  var district = new LiveValidation('district')
+  district.add(Validate.Presence)
+  
+  var zipcode = new LiveValidation('zipcode')
+  zipcode.add( Validate.Presence )
+  zipcode.add(Validate.Length, { minimum: 10})
+  
+  var city = new LiveValidation('city')
+  city.add(Validate.Presence)
+  
+  var state = new LiveValidation('state')
+  state.add(Validate.Presence)
+  state.add(Validate.Length, { minimum: 2});
+  
+  var responsiblename = new LiveValidation('responsiblename')
+  responsiblename.add(Validate.Presence)
+  
+  var password = new LiveValidation('password')
+  password.add(Validate.Presence)
+  password.add(Validate.Length, { minimum: 8} );
+  
+  var passwordconfirmation = new LiveValidation('passwordconfirmation')
+  passwordconfirmation.add(Validate.Presence)
+  passwordconfirmation.add(Validate.Length, { minimum: 8 } );
+  passwordconfirmation.add(Validate.Confirmation, { match: 'password'} );
+  
+  var email = new LiveValidation('email')
+  email.add( Validate.Presence )
+  email.add(Validate.Email)
+  
+  var checkbox = new LiveValidation('check_box')
+  checkbox.add(Validate.Presence)
+  
+  var cnpj = new LiveValidation('cnpj')
+  cnpj.add(Validate.Presence)
+  cnpj.add(Validate.Length, { minimum: 14} );
+  
+</script>
+

@@ -1,0 +1,182 @@
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <% if current_store.roles.first.name == "Store_Manager" %>
+                    <a class="navbar-brand" href="#">Online Bike Record <small>by <b>ORB</b>Label</small></a>
+                <%else%>
+                    <a class="navbar-brand" href="#">Online Bike Record <small>by <b>ORB</b>Label</small></a>
+                <%end%>
+            </div>
+            <!-- /.navbar-header -->
+            <div class="dropdown">
+                    <a class="dropdown-toggle usr-tgle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user usr-drdw ">
+                        <li>
+                        <i class="fa fa-user" ><%= link_to "Minha Conta",edit_store_registration_path,:class=>"btn btn sair-btn minha-btn"%></i>
+                        </li>
+                        <li>
+                        <i class="fa fa-home" ><%= link_to "Home",root_path,target: '_blank',:class=>"btn btn sair-btn minha-btn"%></i>
+                        </li>
+                        <li class="divider">
+                            <li>
+                                <%= form_tag destroy_store_session_path, :method => 'delete' do %>
+                                    <i class="fa fa-sign-out fa-fw"></i><%= submit_tag "Sair",:class=>"btn btn sair-btn"%></i>
+                                <%end%>
+                            </li>
+                        <li>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </div>
+            <% if current_store.roles.first.name == "Store_Manager" %>
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                            <ul class="nav nav-second-level">
+                                <li>
+                                 <a href="#"><i class="fa fa-bicycle"></i> Bicicleta<span class="fa arrow"></span></a>
+                                 <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="<%= new_bike_path %>">Cadastrar bicicleta</a>
+                                </li>
+                                <li>
+                                    <a href="<%= bikes_path %>">Minhas bicicleta</a>
+                                </li>
+                              </ul>
+                               <!-- /.nav-second-level -->
+                            </li>
+                        <!--         <li>
+                                    <a href="<%#= edit_store_registration_path %>">Minha conta</a>
+                                </li> -->
+                                <li>
+                                    <a href="<%= buscar_bicicleta_path %>"><i class="fa fa-search"></i>Buscar bicicleta</a>
+                                </li>
+                                <li>
+                                    <a class="regista-cetfte-model-open"><i class="fa fa-certificate"></i>Requisitar certificados</a>
+                                </li>
+                            </ul>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        </div>
+        <%else%>
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="<%= admin_store_path %>">Lojas</a>
+                                </li>
+                                <li>
+                                    <a href="<%= admin_bike_path %>">Bicicletas</a>
+                                </li>
+                                <li>
+                                    <a href="<%= admin_certificate_path %>">Certificados</a>
+                                </li>
+                            </ul>
+                     </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+        </div>
+        <%end%>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <!-- No Of Certificate Model Open -->
+        <div id="regista-cetfte-add-model" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title">Requisitar Certificados</h4>
+                </div>
+                    <div class="modal-body">
+                        <%= form_tag requisitar_certificados_path, :method => 'post' do %>
+                            <label>Número de certificados</label>
+                            <%= text_field_tag :no_of_certificate,nil,:class=>"form-control ",:placeholder=>"10"%><hr/>
+                            <%= submit_tag "REQUISITAR",:class=>"btn btn-success butns-stle4 crtfe-smt",data: {confirm: 'Store is requesting more certificates'}%>
+                        <%end%>
+
+                    </div>
+              </div>
+            </div>
+        </div>
+    <!-- No Of Certificate Model Close -->
+
+</body>
+
+
+<style type="text/css">
+    .modal-dialog {
+       margin-left: 360px !important;
+       width: 600px !important;
+    }
+    .crtfe-smt{
+        margin-left: 220px;
+    }
+    .sair-btn{
+        color: #777;
+        font-size: 14px;
+        width: 47px;
+        background-color: #fff;
+    }
+   .usr-tgle{
+    float: right;
+    margin-right: 14px;
+     margin-top: 11px;
+   }
+   .usr-drdw{
+    margin-left: 1115px;
+    margin-top: 31px;
+    padding: 0px 14px;
+   }
+   .usr-drdw li a:hover{
+        color: #000;
+   }
+   .usr-drdw li .btn:hover{
+        color: #000;
+   }
+   .minha-btn{
+    margin-bottom: 8px;
+   }
+ .butns-stle4{
+    border: 1px solid #47A447;
+    border-radius: 0;
+    box-shadow: 0 2px 1px #b7b7b7;
+    color: #fff;
+    font-size: 17px;
+    text-align: center;
+    width: 28%;
+  }
+</style>
+
+<script>
+  $(document).ready(function(){
+     $('.dropdown-toggle').dropdown(); 
+  });
+</script>
+
+<script type="text/javascript">
+    $(".regista-cetfte-model-open").click(function(){
+      $("#regista-cetfte-add-model").modal('show')
+    });
+</script>

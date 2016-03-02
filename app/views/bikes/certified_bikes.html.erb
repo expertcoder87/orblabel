@@ -1,0 +1,400 @@
+
+<div id="page-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <h3 class=""><b>Online Bike Record</b><br/><br/><h4 style="margin-top: -32px;">Certificado:<b><%= @bike.certification%></b></h4></h3><hr>
+        <div class="col-lg-9">
+          <!-- panel body -->
+        </div>
+        <!-- /.col-lg-12 -->  
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </div>
+  <!-- /#page-wrapper -->
+  <div>
+    <% if (@bike.robery_alert).present? %>
+    <p style="color: red;"><b>Esta bicicleta tem um alerta de roubo! As funcionalidades associadas com esta bicicleta não estão disponíveis.</b></p>
+    <%end%>
+  </div>
+  <!-- Model For Vender bicicleta -->
+  <div id="selling_add-model" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Vender Bicicleta</h4>
+        </div>
+        <div class="modal-body">
+          <%= form_for(UncertifiedBike.new,:url => vender_bicicleta_path) do |f| %>
+          <%= hidden_field_tag :bike_id,params[:id] %>
+          <div class="form-group">
+            <%= f.label(:email, 'E-mail*') %><br>
+            <%= f.text_field :email,:class=>"form-control",:id=>"v_email"%>
+          </div>
+          <div class="form-group">
+            <%= f.label(:email, 'E-mail-Confirmation*') %><br>
+            <%= f.text_field :email_confirmation,:class=>"form-control",:id=>"v_email_confirm"%>
+          </div>
+          <div class="form-group">
+            <%= f.label(:selling_price, 'Preço de venda*') %><br>
+            <%= f.text_field :selling_price,:class=>"form-control",:id=>"v_price" %>
+          </div>
+          <div class="form-group">
+            <%= f.label(:Upload_Receipt, 'Recibo / Nota') %><br>
+            <%= f.file_field :receipt,:required=>true%>
+          </div>
+          <hr/>
+          <div class="actions">
+            <%= f.submit "Vender bicicleta",:class=>"btn btn-success vndr-btn",data:{confirm: 'Clicando em Prosseguir, o certificado dessa bicicleta será transferido para o novo prorietário e ele receberá um novo código de acesso por e-mail. Você não conseguirá mais acessar essa bicicleta como seu proprietário.' }%>
+          </div>
+          <%end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Model For Vender bicicleta Model Close-->
+  <!-- Registrar manutenção  Model Open -->
+  <div id="maintenance_add-model" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Registrar Manutenção</h4>
+        </div>
+        <div class="modal-body">
+          <%= form_for(MaintenanceEvent.new,:url => register_maintenance_events_path) do |maintenance| %>
+          <%= hidden_field_tag :bike_id,params[:id] %>
+          <div class="form-group">
+            <%= maintenance.label(:description, 'Descrição') %><br>
+            <%= maintenance.text_area :description,:class=>"form-control",:required=>true %>
+          </div>
+          <div class="top-margin">
+            <%= maintenance.label(:description, 'Recibo / Nota') %><br>
+            <%= maintenance.file_field :maintenance_receipt_image,:required=>true %>
+          </div>
+          <hr/>
+          <div class="actions">
+            <%= maintenance.submit "Registrar manutenção",:class=>"btn btn-success rgstr-btn",data:{confirm: 'Você tem certeza de que a informação cadastrada está correta. Esta informação não poderá ser editada posteriormente.' }  %>
+          </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Registrar manutenção  Model Close -->
+  <!-- Registrar nova peça Model Open -->
+  <div id="new_piece_add-model" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Nova Peça</h4>
+        </div>
+        <br>
+        <div class="modal-body">
+          <%= form_for(BikePart.new,:url => register_new_bike_piece_path) do |bike_part| %>
+          <%= hidden_field_tag :bike_id,params[:id]%>
+          <div class="top-group">  
+            <%= bike_part.label :bike_part_type, 'Tipo da Peça<span class="text-danger"></span>'.html_safe %>
+            <%= bike_part.select(:bike_part_type,BikePart.part_types.to_a,{:prompt => 'Escolha uma opção'},{:class=> 'form-control m-b select_bike_type_part'}) %>
+          </div>
+          <div class="peca_antiga"></div>
+          <div class="form-group">  
+            <%= bike_part.label(:bike_part_type, 'Tipo da Peça')%>
+            <%= bike_part.select(:bike_part_type,BikePart.part_types.to_a,{:prompt => 'Escolha uma opção'},{:class=> 'form-control m-b',:id=>"n_bike_part_type"}) %>
+          </div>
+          <div class="form-group">
+            <%= bike_part.label(:brand, 'Marca')%>
+            <%= bike_part.text_field :brand,:class=>"form-control",:id=>"n_bike_part_brand" %>
+          </div>
+          <div class="form-group">
+            <%= bike_part.label(:model, 'Modelo')%>
+            <%= bike_part.text_field :model,:class=>"form-control",:id=>"n_bike_part_model" %>
+          </div>
+          <div class="form-group">
+            <%= bike_part.label(:building_date, 'Fabricação')%>
+            <%= bike_part.text_field :building_date,:class=>"datepicker form-control",:required=>true %>
+          </div>
+          <div class="form-group">
+            <%= bike_part.label(:serial_number, 'Número de Série')%>
+            <%= bike_part.text_field :serial_number,:class=>"form-control",:id=>"n_bike_part_serial" %>
+          </div>
+          <%= bike_part.fields_for MaintenanceEvent.new do |event| %>
+          <div class="top-margin">
+            <%= event.label :maintenance_receipt_image,'Recibo / Nota<span class="text-danger"></span>'.html_safe %>
+            <%= event.file_field :maintenance_receipt_image,:required=>true %>
+          </div>
+          <br/>
+          <!-- <div class="top-margin">
+            <%#= event.label :description, 'Descrição<span class="text-danger"></span>'.html_safe %>
+            <%#= event.text_area :description,:class=>"form-control",:id=>"n_description" %>
+          </div> -->
+          <%end%>
+          <hr/>
+          <div>
+            <%= bike_part.submit "Registrar nova peça",:class=>"btn btn-success rgst-nva-pca",data:{confirm: 'Você tem certeza de que a informação cadastrada está correta. Esta informação não poderá ser editada posteriormente'}%>
+          </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Registrar nova peça Model Close -->
+  <!-- <div class="panel panel-default"> -->
+  <!--   <div class="panel-heading"><h5><b><%#= @bike.model %>-<%#= @bike.certification%></b></h5></div> -->
+    <div class="panel-body">
+      <table class="table table-striped" style="width:35%;margin-left:15px">
+        <% if @store.present? %>
+          <p><b>Conta do proprietário:</b></p>
+          <tr>
+           <th style="border-top: 2px solid #000;">Nome</th>
+           <td style="border-top: 2px solid #000;"><%= @store.responsible_name %></td>
+          </tr>
+          <tr>
+            <th>E-mail</th>
+            <td><%= @store.email %></td>
+          </tr>
+          <tr>
+            <th style="border-bottom: 2px solid #000;">Telefone</th>
+            <td style="border-bottom: 2px solid #000;">(<%= @store.area_code%>) <%= @store.phone_number.insert(5, '-') %></td>
+          </tr>
+        <%end%>
+      </table>
+      <table class="table table-striped" style="width:35%;margin-left:15px">
+        <% if @bike.present? %>
+        <p><b>Dados da bicicleta:</b></p>
+        <tr>
+          <th style="border-top: 2px solid #000;">Marca:</th>
+          <td style="border-top: 2px solid #000;"><%=@bike.brand %></td>
+        </tr>
+        <tr>
+          <th>Modelo</th>
+          <td><%=@bike.model %></td>
+        </tr>
+        <tr>
+          <th>Tamanho</th>
+          <td>
+            <% if @bike.size == 0 %>
+            Pequeno
+            <% elsif @bike.size == 1 %>
+            Médio
+            <% elsif @bike.size == 2 %>
+            Grande
+            <% elsif @bike.size == 3 %>
+            Extra-Grande
+            <%else%>
+            Não selecionado
+            <%end%>
+          </td>
+        </tr>
+        <tr>
+          <th>Fabricação</th>
+          <td><%=@bike.building_date %></td>
+        </tr>
+        <tr>
+          <th style="border-bottom: 2px solid #000;">Número de Série</th>
+          <td style="border-bottom: 2px solid #000;"><%=@bike.serial_number %></td>
+        </tr>
+        <%end%>
+      </table>
+      <table class="table table-striped"style="width:80%;margin-left:15px;border-top: 2px solid #000;border-bottom: 2px solid #000;">
+        <p><b>Peças:</b></p>
+        <tr>
+          <th>Peça</th>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th>Fabricação</th>
+          <th>Número de Série</th>
+        </tr>
+        <% if @bike.bike_parts.present? %>
+        <% @bike.bike_parts.each do |bike_part| %>
+        <tr>
+          <td>
+            <% if bike_part.bike_part_type == 0 %>
+            Garfo
+            <% elsif bike_part.bike_part_type == 1 %>
+            Rodas
+            <% elsif bike_part.bike_part_type == 2 %>
+            Quadro
+            <%else%>
+            Não selecionado
+            <%end%>
+          </td>
+          <td><%= bike_part.brand %></td>
+          <td><%= bike_part.model %></td>
+          <td><%= bike_part.building_date %></td>
+          <td><%= bike_part.serial_number %></td>
+          <%end%>
+        </tr>
+        <%end%>
+      </table>
+      <table class="table table-striped" style="width:80%;margin-left:15px;border-top: 2px solid #000;border-bottom: 2px solid #000;">
+        <p><b>Manutenções:</b></p>
+        <tr>
+          <th>Data</th>
+          <th>Descrição</th>
+          <th>Recibo / Nota</th>
+        </tr>
+        <% if @bike_maintenance_events.present? %>
+        <% @bike_maintenance_events.each do |bike_event| %>
+        <tr>
+          <td><%= bike_event.updated_at.strftime("%d/%m/%Y")%></td>
+          <td><%= bike_event.description %></td>
+          <td><%=image_tag bike_event.maintenance_receipt_image %></td>
+        </tr>
+        <%end%>
+        <%end%>
+      </table>
+      <table class="table table-striped" style="width:80%;margin-left:15px;border-top: 2px solid #000;border-bottom: 2px solid #000;">
+      <% if @transfered_bike.present? %>
+        <p><b>Vendas:</b></p>
+        <tr>
+          <th>Data</th>
+          <th>Recibo / Nota</th>
+        </tr>
+        <tr>
+            <td><%= @transfered_bike.updated_at.strftime("%d/%m/%Y") %></td>
+            <td><%= image_tag @transfered_bike.receipt%></td>         
+        </tr>
+      <%end%>
+      </table>
+      <table class="table table-bordered" style="width:35%;border-top:0px;">
+      <p><b style="font-size: 20px;">Foto:</b></p>
+        <tr>
+          <td style="border-top: 0px none;"><%= image_tag @bike.bike_image%></td>
+        </tr>
+      </table> <br/><br/>
+      <div class="" style="overflow-y:auto; display:inline-flex">
+        <h3 class="thin text-center"></h3>
+        <p class="notice"><%= notice %></p>
+        <% if @role == "Store_Manager" && (@bike_owner_store_own).present? %>
+        <a class="maintenance_open-model btn btn butns-stle">Registrar Manutenção </a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="new_piece_open-model btn btn butns-stle">Nova Peça</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="selling_open-model btn btn butns-stle">Transferir OBR</a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <%= form_tag certified_bikes_path, :method => 'get' do %>
+        <% if @robery == false %>
+          <%= submit_tag "Alertar Roubo",:class=>"btn btn butns-stle rpt-btn",data: {confirm: 'Você tem certeza de que deseja reportar o roubo dessa bicicleta? Este certificado ficará bloqueado.'}%>
+          <%elsif  @robery == true %>
+          <%= submit_tag "Cancelar Alerta de Roubo",:class=>"btn btn-danger rpt-btn" %>
+          <%else%>
+          <%= submit_tag "Alertar Roubo",:class=>"btn btn butns-stle rpt-btn",data: {confirm: 'Você tem certeza de que deseja reportar o roubo dessa bicicleta? Este certificado ficará bloqueado.'}%>
+          <% end %> 
+         <%end%>   
+        <%else%>
+        <a class="maintenance_open-model btn btn butns-stle">Registrar Manutenção </a>
+        <a class="new_piece_open-model btn btn butns-stle" style="margin-left: 12px;">Nova Peça</a>
+        <%end%>
+        <%= link_to "Voltar",bikes_path,:class=>"btn btn butns-stle volter-btn"%>
+     </div>
+    </div> 
+  </div>
+<!-- </div> -->
+
+<script type="text/javascript">  
+  $(".selling_open-model").click(function(){
+     $("#selling_add-model").modal('show')
+   });
+  
+  $(".maintenance_open-model").click(function(){
+      $("#maintenance_add-model").modal('show')
+  });
+  
+  $(".new_piece_open-model").click(function(){
+      $("#new_piece_add-model").modal('show')
+  });
+  
+  $(".select_bike_type_part").change(function(){
+    var part_type = this.value
+    var bike = "<%=params[:id]%>" 
+     $.ajax({
+        url: '/peca_antiga_details',
+        type: 'GET',
+        data: {bike_part_type: part_type,bike_id: bike}
+     });  
+  });
+   
+  $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
+  
+   var bike_part_type = new LiveValidation('n_bike_part_type')
+   bike_part_type.add( Validate.Presence )
+  
+   var bike_part_brand = new LiveValidation('n_bike_part_brand')
+   bike_part_brand.add( Validate.Presence )
+  
+   var bike_part_model = new LiveValidation('n_bike_part_model')
+   bike_part_model.add( Validate.Presence )
+  
+   var bike_part_serial = new LiveValidation('n_bike_part_serial')
+   bike_part_serial.add( Validate.Presence )
+  
+   var bike_part_description = new LiveValidation('n_description')
+   bike_part_description.add( Validate.Presence )
+  
+  
+   var email = new LiveValidation('v_email');
+   email.add( Validate.Presence )
+   email.add( Validate.Email );
+  
+   var email_confir = new LiveValidation('v_email_confirm')
+   email.add( Validate.Presence )
+   email_confir.add(Validate.Email)
+   email_confir.add( Validate.Confirmation, { match: 'v_email' } );
+  
+   var price = new LiveValidation('v-price')
+   email.add( Validate.Presence )
+   price.add( Validate.Presence )
+  
+</script>
+
+<style type="text/css">
+  .vndr-btn{
+    margin-left: 215px;
+    color: #fff;
+    border: 1px solid #47A447;
+    border-radius: 0;
+    box-shadow: 0 2px 1px #b7b7b7;
+    font-size: 17px;
+    text-align: center;
+  }
+  .rgstr-btn{
+    margin-left: 200px;
+    color: #fff;
+    border: 1px solid #47A447;
+    border-radius: 0;
+    box-shadow: 0 2px 1px #b7b7b7;
+    font-size: 17px;
+    text-align: center;
+  }
+  .rgst-nva-pca{
+    margin-left: 200px;
+    color: #fff;
+    border: 1px solid #47A447;
+    border-radius: 0;
+    box-shadow: 0 2px 1px #b7b7b7;
+    font-size: 17px;
+    text-align: center;
+  }
+  .volter-btn{
+    margin-left: 15px;
+  }
+  .butns-stle{
+    background-color: rgb(78, 129, 189);
+    color: #fff;
+    border: 1px solid #4e81bd;
+    border-radius: 0;
+    box-shadow: 0 2px 1px #b7b7b7;
+    font-size: 17px;
+    text-align: center;
+  }
+  tr:nth-child(even) {background: #fff}
+  tr:nth-child(odd) {background: #FFF}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: #dddddd;
+}
+</style>
+

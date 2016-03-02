@@ -1,0 +1,42 @@
+
+
+<!-- <h2>Resend confirmation instructions</h2> -->
+<%= render "shared/header" %>
+<!-- container -->
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="/acesso-da-loja"></a></li>
+    <li class="active"></li>
+  </ol>
+  <div class="row">
+    <!-- Article main content -->
+    <article class="col-xs-12 maincontent">
+      <header class="page-header">
+        <h1 class="page-title"></h1>
+      </header>
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h3 class="thin text-center">Generate Access Code For New Bike</h3>
+            <p class="text-center text-muted"></p>
+            <p class="notice"><%= notice %></p>
+            <hr>
+            <div>
+              <%= form_tag access_code_path(id: params[:id]), :method => 'get' do %>
+              <span class="col-md-4 bike_search"></span><br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+              <span class="access_code_hide">
+                <h3><%= @access_code%></h3>
+              </span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= button_tag "Generate Access",:class=>"btn btn-info generate_btn"%><br/><br/>
+              <%end%>                
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    <!-- /Article -->
+  </div>
+</div>
+<!-- /container -->
+

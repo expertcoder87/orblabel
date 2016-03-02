@@ -1,0 +1,24 @@
+<p>Welcome <%= @resource.email %>!</p>
+<h3> Registration Details</h3>
+
+<p><b>Personal Details:</b></p>
+
+<p><b>Nome da loja ou revenda :</b> <%= @resource.public_name %></p>
+<p><b>Razão social:</b><%= @resource.legal_name %></p>
+<p><b>CNPJ:</b><%= @resource.cnpj %></p>
+<p><b>Telefone:</b><%= @resource.area_code %>-<%= @resource.phone_number %></p>
+<p><b>Nome do responsável:</b><%= @resource.responsible_name %></p>
+<br/>
+<p><b>Address Details:</b></p>
+
+<p><b>Endereço:</b><%= @resource.address.street %></p>
+<p><b>Número:</b><%= @resource.address.number %></p>
+<p><b>Complemento:</b><%= @resource.address.district %></p>
+<p><b>CEP:</b><%= @resource.address.zipcode %></p>
+<p><b>Cidade:</b><%= @resource.address.city %></p>
+<p><b>Estado:</b><%= @resource.address.state %></p>
+<br/><br>
+<p><i>Obrigado por cadastrar sua loja com a ORBLabel.</i></p>
+<p><i>Sua conta foi ativada. Para acessá-la agora <%= link_to 'clique aqui', new_store_session_url %></i></p>.
+
+

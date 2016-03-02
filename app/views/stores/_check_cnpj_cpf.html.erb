@@ -1,0 +1,15 @@
+<% if @cnpj_invalid.present? || @cnpj_existence.present? || @cnpj_valid.present? %>
+	<%if @cnpj_invalid.present? %>
+		<p style="color:#CC0000">CNPJ inválido</p>
+	<% elsif @cnpj_existence.present?%>
+		<p style="color:#CC0000">Por favor,registre com novo CNPJ</p>
+	<% elsif @cnpj_valid.present? %>
+		<p></p>
+	<%end%>
+<% elsif @email_existence.present? || @email_nonexistence.present? %>
+	<%if @email_existence.present? %>
+		<p style="color:#CC0000">Por favor,registre com novo e-mail</p>
+	<% elsif @email_nonexistence.present? %>
+		<p></p>
+	<%end%>
+<%end%>

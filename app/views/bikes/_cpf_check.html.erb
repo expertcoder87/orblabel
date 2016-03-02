@@ -1,0 +1,7 @@
+<% if @cpf_invalid.present? || @cpf_valid.present? %>
+	<%if @cpf_invalid.present? %>
+		<p style="color:#CC0000;margin-top: -27px;">CPF inválido</p>
+	<%elsif @cpf_valid.present? %>
+		<p></p>
+	<%end%>
+<%end%>

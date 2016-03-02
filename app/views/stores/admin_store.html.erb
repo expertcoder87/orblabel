@@ -1,0 +1,84 @@
+<div id="page-wrapper">
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Lojas</h1>
+  </div>
+</div>
+<%= link_to 'New Store',admin_new_registration_path,:class=>"btn btn-outline btn-info"%>
+<hr/>
+<div class="row">
+  <div class="col-lg-14">
+    <div class="panel panel-default" style="width: 1270px;">
+      <div class="panel-heading">Lojas Detalhes</div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-lg-8">
+            <p class="notice"><%= notice %></p>
+            <table class="table table-bordered"style="width: 980px;">
+              <tr>
+                <th>Nome da loja ou revenda</th>
+                <th>Razão social</th>
+                <th>CNPJ</th>
+                <th>Telefone</th>
+                <th>Endereço</th>
+                <th>Nome do responsável</th>
+                <th>E-mail</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+              <% if !@stores.nil? %>
+              <% @stores.each_with_index do |store,index|%>
+              <% if !(store.email == "admin@admin.com") %>
+              <tr>
+                <td><%= store.public_name %></td>
+                <td><%= store.legal_name%></td>
+                <td><%= CNPJ.new(store.cnpj).formatted %></td>
+                <td>
+                  <b>Código de área:</b><%= store.area_code %>
+                  <b>Número de telefone:<%= store.phone_number%></b> 
+                </td>
+                <%if !store.address.nil?%>
+                <td>
+                  <b>Rua:</b><%= store.address.street%>
+                  <b>Número:</b><%= store.address.number%>
+                  <b>Distrito:</b><%= store.address.district %>
+                  <b>Cidade:</b><%= store.address.city %>
+                  <b>Estado:</b><%= store.address.state %>
+                  <b>CEP:</b><%= store.address.zipcode %>
+                </td>
+                <%else%>
+                <td>Address Details Not Found</td>
+                <%end%>
+                <td><%= store.responsible_name%></td>
+                <td><%= store.email %></td>
+                <td>
+                  <%= form_tag sign_up_mail_path(id: store.id), :method => 'get' do %>
+                  <% if store.status == true %>
+                  <%= submit_tag "Desativar",class: "btn btn-danger"%>
+                  <%else%>
+                  <%= submit_tag "Ativar",class: "btn btn-success"%>
+                  <%end%>
+                  <%end%>
+                </td>
+                <td>
+                  <%= link_to '', admin_edit_registration_path(store.id),class: "fa fa-pencil" %>
+                  <%= link_to '',admin_store_destroy_path(store.id), method: :store_destroy, data: { confirm: 'Are you sure?'},:class=>"fa fa-trash-o"%>
+                </td>
+              </tr>
+              <%end%>
+              <%end%>
+              <%else%>
+              No Details Found
+              <%end%>
+            </table>
+            <%= paginate @stores %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

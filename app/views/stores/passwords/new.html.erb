@@ -1,0 +1,48 @@
+
+
+<!-- <h2>Forgot your password?</h2> -->
+<%= render "shared/header" %>
+<!-- container -->
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="/acesso-da-loja">Acesso da Loja</a></li>
+    <li class="active">Esqueceu a Senha?</li>
+  </ol>
+  <div class="row">
+    <!-- Article main content -->
+    <article class="col-xs-12 maincontent">
+      <header class="page-header">
+        <h1 class="page-title">Esqueceu a Senha?</h1>
+      </header>
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h3 class="thin text-center">Recupere seu acesso</h3>
+            <p class="text-center text-muted">Informe seu e-mail para recuperar seu acesso.</p>
+            <p class="notice"><%= notice %></p>
+            <hr>
+            <%= form_for(resource, as: resource_name, url: store_password_path(resource_name), html: { method: :post }) do |f| %>
+            <%= devise_error_messages! %>
+            <div class="top-margin">
+              <label>E-mail <span class="text-danger">*</span></label>
+              <%= f.email_field :email, autofocus: true,:class=>"form-control",:require=>true %>
+            </div>
+            <hr/>
+            <div class="row">
+              <div class="col-lg-8">
+                <b><a href="/acesso-da-loja">Acessar conta ?</a></b>
+              </div>
+              <div class="col-lg-4 text-right">
+                <%= f.submit "ENVIAR",:class=>"btn btn-success" %>
+              </div>
+            </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+  </div>
+  </article>
+  <!-- /Article -->
+</div>
+</div>	<!-- /container -->
+

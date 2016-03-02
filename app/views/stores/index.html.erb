@@ -1,0 +1,63 @@
+
+<%= render "shared/header" %>
+<!-- container -->
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">Lojas autorizadas detalhes</li>
+  </ol>
+  <br/>
+  <div class="row">
+    <!-- Article main content -->
+    <article class="col-sm-9 maincontent">
+      <header class="page-header">
+        <h1 class="page-title">LOJAS AUTORIZADAS DETALHES</h1>
+      </header>
+      <br/>
+      <form>
+        <table class="table table-striped table-bordered table-hover">
+          <tr>
+            <th>Nome da loja ou revenda</th>
+            <th>Telefone</th>
+            <th>Endereço</th>
+            <th>E-mail</th>
+          </tr>
+          <% if !@stores.nil? %>
+          <% @stores.each do |store|%>
+          <% if !(store.email == "admin@admin.com") %>
+          <% if (store.status == true)%>
+          <tr>
+            <td><%= store.public_name %></td>
+            <td>
+              <b>Número de telefone:<%= store.phone_number%></b>	
+            </td>
+            <%if !store.address.nil?%>
+            <td>
+              <b>Rua:</b><%= store.address.street%><br>
+              <b>Número:</b><%= store.address.number%><br>
+              <b>Distrito:</b><%= store.address.district %><br>
+              <b>Cidade:</b><%= store.address.city %><br>
+              <b>Estado:</b><%= store.address.state %><br>
+              <b>CEP:</b><%= store.address.zipcode %>
+            </td>
+            <%else%>
+            <td>
+              Address Details Not Found
+            </td>
+            <%end%>
+            <td><%= store.email %></td>
+          </tr>
+          <%end%>
+          <%end%>
+          <%end%>
+          <%else%>
+          No Details Found
+          <%end%>
+        </table>
+        <%= paginate @stores %>
+      </form>
+    </article>
+  </div>
+</div>
+
+

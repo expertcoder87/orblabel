@@ -1,0 +1,102 @@
+
+
+<% if @store.roles.first.name == "Store_Manager" %>
+<div id="page-wrapper">
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Minha Conta</h1>
+  </div>
+</div>
+<div class="row">
+<div class="col-lg-8">
+  <div class="panel panel-default">
+    <div class="panel-heading">&nbsp;</div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <%= form_for(@store,:url=>admin_store_update_path) do |f|%>
+          <%= hidden_field_tag :store_id,params[:id]%>
+          <p class="notice" style="color: red;"><%= notice %></p>
+          <div class="form-group">
+            <%= f.label :public_name, 'Nome da loja ou revenda<span class="text-danger">*</span>'.html_safe %>
+            <%= f.text_field :public_name, :class => "form-control",:required=>true %>
+          </div>
+          <div class="form-group">
+            <%= f.label :legal_name, 'Razão social<span class="text-danger">*</span>'.html_safe %>
+            <%= f.text_field :legal_name, :class => "form-control",:required=>true %>
+          </div>
+          <div class="form-group">
+            <%= f.label :cnpj, 'CNPJ<span class="text-danger">*</span>'.html_safe %>
+            <%= f.text_field :cnpj, :class => "form-control", :maxlength => "14",:required=>true %>
+          </div>
+          <div class="form-group">
+            <label>Telefone<span class="text-danger">*</span></label>
+            <div class="form-inline">
+              <%= f.text_field :area_code, :class => "form-control", :maxlength => "2", :placeholder => "DDD", :size => "4",:required=>true %>
+              &nbsp;&nbsp;
+              <%= f.text_field :phone_number, :class => "form-control", :maxlength => "9", :placeholder => "Número",:required=>true %>
+            </div>
+          </div>
+          <div class="fields">
+            <label>Endereço<span class="text-danger">*</span></label><br/>
+            <%= f.fields_for :address do |address_form| %>
+            <%= address_form.text_field :street, :class => "wdth-frm form-control", :placeholder => "Rua, Avenida..." %><br/>
+            <div class="form-inline">
+              <%= address_form.text_field :number, :class => "form-control",:maxlength => "4", :placeholder => "Número", :size => "8",:required=>true %>
+              &nbsp;&nbsp;
+              <%= address_form.text_field :district, :class => "form-control",:placeholder => "Complemento", :size => "30",:required=>true %><br>
+              <%= address_form.text_field :zipcode, :class => "form-control",:maxlength => "10",:placeholder => "CEP", :size => "15",:required=>true %>
+            </div>
+            <br>
+            <div class="form-inline">
+              <%= address_form.text_field :city,:class => "form-control",:placeholder => "Cidade", :size => "30",:required=>true %>
+              &nbsp;&nbsp;
+              <%= address_form.text_field :state, :class => "form-control", :maxlength => "2", :placeholder => "Estado", :size => "8",:required=>true %>
+            </div>
+            <%end%>
+          </div>
+          <br/>
+          <div class="form-group">
+            <label>Nome do responsável<span class="text-danger">*</span></label>
+            <%= f.text_field :responsible_name, :class => "form-control",:required=>true %> 
+          </div>
+          <div class="form-group">
+            <label>E-mail<span class="text-danger">*</span></label>
+            <%= f.text_field :email, :class => "form-control",:placeholder=>"example@gmail.com" %>
+          </div>
+          <div class="top-margin">
+            <label>Password<span class="text-danger">*</span></label>
+            <% if @minimum_password_length %>
+            <em>(<%= @minimum_password_length %> characters minimum)</em>
+            <% end %>
+            <%= f.password_field :password, autocomplete: "off",:class => "form-control",:required=>true %>
+          </div>
+          <br/>
+          <div class="form-group">
+            <label>Password Confirmation<span class="text-danger">*</span></label>  
+            <%= f.password_field :password_confirmation, autocomplete: "off",:class => "form-control",:required=>true %>
+          </div>
+          <hr/>
+          <div class="form-group">
+            <%= f.submit "ATUALIZACAO LOJA
+              ",:class=>"btn btn-success adn-crt"%>
+          </div>
+          <%end%>
+          <%end%>
+        </div>
+      </div>
+    </div>
+    </article>
+    <!-- /Article -->
+  </div>
+</div>
+<!-- /container -->
+<style type="text/css">
+  .adn-crt{
+    margin-left: 230px;
+  }
+  .wdth-frm{
+  width: 510px;
+  }
+</style>
+
