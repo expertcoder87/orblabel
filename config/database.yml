@@ -4,17 +4,17 @@ default: &default
   pool: 5
   username: postgres
   host: localhost
-  # password: 12345678
-  password: postgres
+  password: 12345678
+  # password: postgres
 
 development:
   <<: *default
-  database: app_development1
+  database: app_development
 
 test:
   <<: *default
-  database: app_test1
+  database: app_test
 
 production:
   <<: *default
-  database: app_production1
+  database: app_production
